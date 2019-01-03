@@ -148,7 +148,8 @@ class Conversation1 extends Component {
     console.log(e.target.value,"onchange")
     this.props.resetTranscript()
     e.preventDefault();
-    this.props.handleUserInput(e.target.value);
+    console.log(this.state.questions[this.state.questionNumber].key)
+    this.props.handleUserInput(e.target.value,this.state.questions[this.state.questionNumber].key);
     this.setState({
       userInput: e.target.value,
     })
@@ -172,7 +173,7 @@ class Conversation1 extends Component {
   
   handleButtonSelect(select) {
     console.log("Button select",select)
-    if(select.key=="restaurents"){
+    if(select.key=="temp"){
       let restaurent;
       if(select.value==1){
         restaurent="40°";
@@ -232,19 +233,19 @@ class Conversation1 extends Component {
           ...this.state.questions,
           {
             text: "OK, please put your package in bin number 1 and set the temperature.",
-            key: 'restaurents',
+            key: 'temp',
             sender:"BOT",
             buttons: [{
                 text: '40°',
-                key: 'restaurents',
+                key: 'temp',
                 value: '1',
               }, {
                 text: '50°',
-                key: 'restaurents',
+                key: 'temp',
                 value: '2',
               }, {
                 text: '60°',
-                key: 'restaurents',
+                key: 'temp',
                 value: '3',
               }]}
       ],
@@ -442,7 +443,7 @@ class Conversation1 extends Component {
     e.preventDefault();
     console.log("onSubmit");
     console.log(this.state.userInput,"input");
-   
+    this.props.Unlock(this.state.userInput);
       if(this.props.listening){
         this.props.stopListening();
       }
@@ -614,6 +615,7 @@ class Conversation1 extends Component {
       //   })
       // }
       if(this.state.userInput.indexOf("40")>-1||this.state.userInput.indexOf("50")>-1 ||this.state.userInput.indexOf("60")>-1){
+        this.props.Unlock(this.state.userInput);
         this.setState({
             messages: [
               ...this.state.messages,
@@ -659,19 +661,19 @@ class Conversation1 extends Component {
             ...this.state.questions,
             {
             text: "OK, please put your package in bin number 1 and set the temperature.",
-            key: 'restaurents',
+            key: 'temp',
             sender:"BOT",
             buttons: [{
                 text: '40°',
-                key: 'restaurents',
+                key: 'temp',
                 value: '1',
               }, {
                 text: '50°',
-                key: 'restaurents',
+                key: 'temp',
                 value: '2',
               }, {
                 text: '60°',
-                key: 'restaurents',
+                key: 'temp',
                 value: '3',
               }]}
         ],

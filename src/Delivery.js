@@ -40,7 +40,9 @@ class Delivery extends Component {
         this.state = {
             isOpen: false,
             shop:1,
-            data:""
+            data:"",
+            Unlock:0,
+            Temp:0
         }            
     }   
     onButtonSelect = (val) => {
@@ -56,11 +58,26 @@ class Delivery extends Component {
         }
         
     }
-    handleUserInput(data){
+    Unlock = (data) => {
         console.log(data);
+        if(data==99999){
+            this.setState({
+                Unlock:1
+            })
+        }
+        else{
+            this.setState({
+                Temp:1
+            })
+        }
+    }
+    handleUserInput(data,key){
+        console.log(data,key);
         this.setState({
             data
         })
+        console.log(this.state)
+       
     }
     render() {    
         const { expanded, classes } = this.props;  
@@ -87,14 +104,18 @@ class Delivery extends Component {
                     </div>
                     <div className="row" style={{width:"100%", height: "100%", margin: 0}}>
                         {/* <img src={"/img/Bin2_"+this.state.shop+".png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/> */}
-                         <img src={"/img/Passcode"+this.state.data.length+".png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/>
+                        {
+                            (this.state.Unlock==0)?((this.state.Temp==0 ? <img src={(this.state.data.length<6)?("/img/Passcode"+this.state.data.length+".png"):("/img/Passcode5.png")} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/> : <img src={"/img/Passcode5.png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/>)):((this.state.Temp==0)?(<img src={"/img/PasscodeUnlock.png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/>):(<img src={"/img/Bin2_"+this.state.shop+".png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/>))
+                            
+                        }
+                         
                     </div>
                     </Card>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12" >
                 <Card className={classes.cardhover} style={{height:680,background: '#14191c'}}>
                     <div className="row" style={{backgroundColor: "black", width:"100%", height: "100%", margin:0}}>
-                        <Bot1 handleUserInput={(data)=>this.handleUserInput(data)} buttonSelect={this.onButtonSelect} />
+                        <Bot1 handleUserInput={(data,key)=>this.handleUserInput(data,key)} Unlock={this.Unlock} buttonSelect={this.onButtonSelect} />
                     </div>
                     </Card>
                 </div>

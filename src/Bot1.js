@@ -85,18 +85,18 @@ class Bot1 extends Component {
       key: 'PASSCODE'
     },{
       text: "OK, please put your package in bin number 1 and set the temperature.",
-      key: 'restaurents',
+      key: 'temp',
       buttons: [{
         text: '40°',
-        key: 'restaurents',
+        key: 'temp',
         value: '1',
       }, {
         text: '50°',
-        key: 'restaurents',
+        key: 'temp',
         value: '2',
       }, {
         text: '60°',
-        key: 'restaurents',
+        key: 'temp',
         value: '3',
       }]
     }]
@@ -160,6 +160,7 @@ class Bot1 extends Component {
         <div>
           <Conversation1  style={{maxWidth: "100% !important" }}
             buttonSelect={this.props.buttonSelect}
+            Unlock={this.props.Unlock}
             handleUserInput={this.props.handleUserInput}
             questions={questions}
             onEnded={getUserAnswers}
