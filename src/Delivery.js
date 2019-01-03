@@ -40,6 +40,7 @@ class Delivery extends Component {
         this.state = {
             isOpen: false,
             shop:1,
+            Incorrect:0,
             data:"",
             Unlock:0,
             Temp:0
@@ -48,27 +49,35 @@ class Delivery extends Component {
     onButtonSelect = (val) => {
         console.log(val,"Val after fetch call")
         if(val==1){
-            this.setState({shop: val});
+            this.setState({shop: val,Temp:1});
         }
         else if(val==2){
-            this.setState({shop: val});
+            this.setState({shop: val,Temp:1});
         }
         else if(val==3){
-            this.setState({shop:val});
+            this.setState({shop:val,Temp:1});
         }
         
     }
-    Unlock = (data) => {
-        console.log(data);
+    Unlock = (data,key) => {
+        console.log(data,key);
         if(data==99999){
             this.setState({
                 Unlock:1
             })
         }
         else{
-            this.setState({
-                Temp:1
-            })
+            if(key=="temp"){
+                this.setState({
+                    Temp:1
+                })
+            }
+            else{
+                this.setState({
+                    Incorrect:1
+                })
+            }
+           
         }
     }
     handleUserInput(data,key){
@@ -105,7 +114,8 @@ class Delivery extends Component {
                     <div className="row" style={{width:"100%", height: "100%", margin: 0}}>
                         {/* <img src={"/img/Bin2_"+this.state.shop+".png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/> */}
                         {
-                            (this.state.Unlock==0)?((this.state.Temp==0 ? <img src={(this.state.data.length<6)?("/img/Passcode"+this.state.data.length+".png"):("/img/Passcode5.png")} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/> : <img src={"/img/Passcode5.png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/>)):((this.state.Temp==0)?(<img src={"/img/PasscodeUnlock.png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/>):(<img src={"/img/Bin2_"+this.state.shop+".png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/>))
+                            (this.state.Unlock==0)?((this.state.Temp==0&&this.state.Incorrect==0 ? <img src={(this.state.data.length<6)?("/img/Passcode"+this.state.data.length+".png"):("/img/Passcode5.png")} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/> : <img src={"/img/Incorrect.png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/>))
+                            :((this.state.Temp==0)?(<img src={"/img/PasscodeUnlock.png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/>):(<img src={"/img/Bin2_"+this.state.shop+".png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/>))
                             
                         }
                          

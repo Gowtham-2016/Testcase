@@ -443,7 +443,7 @@ class Conversation1 extends Component {
     e.preventDefault();
     console.log("onSubmit");
     console.log(this.state.userInput,"input");
-    this.props.Unlock(this.state.userInput);
+    this.props.Unlock(this.state.userInput,this.state.questions[this.state.questionNumber].key);
       if(this.props.listening){
         this.props.stopListening();
       }
@@ -1026,6 +1026,42 @@ class Conversation1 extends Component {
       //       })
       //     })
       // }
+      else if(this.state.questions[this.state.questionNumber].key=="PASSCODE"&&this.state.userInput!=="99999"){
+  
+          this.setState({
+            loadingBot: false,
+            messages: [
+              ...this.state.messages,
+              {
+                text: this.state.userInput,
+                type: 'USER'
+              }
+            ],
+            questionNumber:this.state.questionNumber-1,
+            questions:this.props.questions.map(question => {
+              return {
+                ...question,
+                sender: 'BOT',
+              };
+            }),
+            answers: this.state.questions[this.state.questionNumber].key ? {
+              ...this.state.answers,
+              [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+            } : {
+              ...this.state.answers,
+            },
+            userInput: '',
+            loadingBot: true,
+          },()=>{
+            this.setState({
+              userInput:""
+            },()=>{this.props.resetTranscript()
+            this.nextQuestion()
+            })
+          })
+        
+        
+      }
       else{
         this.setState({
           loadingBot: false,
