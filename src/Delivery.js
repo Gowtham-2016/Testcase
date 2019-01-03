@@ -39,7 +39,8 @@ class Delivery extends Component {
         super(props);
         this.state = {
             isOpen: false,
-            shop:1
+            shop:1,
+            data:""
         }            
     }   
     onButtonSelect = (val) => {
@@ -55,7 +56,12 @@ class Delivery extends Component {
         }
         
     }
-
+    handleUserInput(data){
+        console.log(data);
+        this.setState({
+            data
+        })
+    }
     render() {    
         const { expanded, classes } = this.props;  
         return (
@@ -70,24 +76,25 @@ class Delivery extends Component {
                 <Card className={classes.cardhover} style={{height:680,background: '#14191c'}}>
                     <div className="row" style={{height:80,background: "#000", width:"100%", margin: 0}}>
                         <div className="col-4 text-center p-0">
-                            <Card style={{ margin: 0, background: "#000",height: 80,padding: 20,color: "#3edaeb"}}><h2>Bin 1</h2></Card>
+                            <Card style={{ margin: 0, background: "#1C1E21",height: 80,padding: 20,color: "#3edaeb"}}><h2>Bin 1</h2></Card>
                         </div>
                         <div className="col-4 text-center p-0">
-                            <Card style={{ margin: 0, background: "#1C1E21",height: 80,padding: 20,color: "#3edaeb"}}><h2>Bin 2</h2></Card>
+                            <Card style={{ margin: 0, background: "#000",height: 80,padding: 20,color: "#3edaeb"}}><h2>Bin 2</h2></Card>
                         </div>
                         <div className="col-4 text-center p-0">
                             <Card style={{ margin: 0, background: "#000",height: 80,padding: 20,color: "#3edaeb"}}><h2>Bin 3</h2></Card>
                         </div>
                     </div>
                     <div className="row" style={{width:"100%", height: "100%", margin: 0}}>
-                        <img src={"/img/Bin2_"+this.state.shop+".png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/>
+                        {/* <img src={"/img/Bin2_"+this.state.shop+".png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/> */}
+                         <img src={"/img/Passcode"+this.state.data.length+".png"} alt="bedestrian" responsive style={{width: "100%", height: "100%"}}/>
                     </div>
                     </Card>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-12" >
                 <Card className={classes.cardhover} style={{height:680,background: '#14191c'}}>
                     <div className="row" style={{backgroundColor: "black", width:"100%", height: "100%", margin:0}}>
-                        <Bot1 buttonSelect={this.onButtonSelect} />
+                        <Bot1 handleUserInput={(data)=>this.handleUserInput(data)} buttonSelect={this.onButtonSelect} />
                     </div>
                     </Card>
                 </div>

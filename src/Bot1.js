@@ -66,7 +66,25 @@ class Bot1 extends Component {
       width: '500px',
     };
     let questions = [{
-      text: "OK, please put your package in bin number 2 and set the temperature.",
+      // text: "OK, please put your package in bin number 1 and set the temperature.",
+      // key: 'restaurents',
+      // buttons: [{
+      //   text: '40°',
+      //   key: 'restaurents',
+      //   value: '1',
+      // }, {
+      //   text: '50°',
+      //   key: 'restaurents',
+      //   value: '2',
+      // }, {
+      //   text: '60°',
+      //   key: 'restaurents',
+      //   value: '3',
+      // }]
+      text: "Please input the PASSCODE to Unlock Bin 1",
+      key: 'PASSCODE'
+    },{
+      text: "OK, please put your package in bin number 1 and set the temperature.",
       key: 'restaurents',
       buttons: [{
         text: '40°',
@@ -81,7 +99,8 @@ class Bot1 extends Component {
         key: 'restaurents',
         value: '3',
       }]
-    }
+    }]
+    
     // , {
     //   text: 'Please Select one of Items from the Menu',
     //   key: 'Menu',
@@ -126,7 +145,7 @@ class Bot1 extends Component {
     //     value: 'continue',
     //   }]
     // }
-  ];
+     //];
 
     let { transcript, startListening, resetTranscript, browserSupportsSpeechRecognition, finalTranscript } = this.props
 
@@ -141,6 +160,7 @@ class Bot1 extends Component {
         <div>
           <Conversation1  style={{maxWidth: "100% !important" }}
             buttonSelect={this.props.buttonSelect}
+            handleUserInput={this.props.handleUserInput}
             questions={questions}
             onEnded={getUserAnswers}
             theme={theme}

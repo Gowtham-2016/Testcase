@@ -148,6 +148,7 @@ class Conversation1 extends Component {
     console.log(e.target.value,"onchange")
     this.props.resetTranscript()
     e.preventDefault();
+    this.props.handleUserInput(e.target.value);
     this.setState({
       userInput: e.target.value,
     })
@@ -204,7 +205,7 @@ class Conversation1 extends Component {
         questions:[
           ...this.state.questions,
           {
-            text: "Temperature of Bin 2 has been set to "+restaurent,
+            text: "Temperature of Bin 1 has been set to "+restaurent,
             sender: 'BOT',
             key: 'category',
             buttons: [{
@@ -230,7 +231,7 @@ class Conversation1 extends Component {
         questions:[
           ...this.state.questions,
           {
-            text: "OK, please put your package in bin number 2 and set the temperature.",
+            text: "OK, please put your package in bin number 1 and set the temperature.",
             key: 'restaurents',
             sender:"BOT",
             buttons: [{
@@ -630,7 +631,7 @@ class Conversation1 extends Component {
             questions:[
               ...this.state.questions,
               {
-                text: "Temperature of Bin 2 has been set to "+this.state.userInput +" °",
+                text: "Temperature of Bin 1 has been set to "+this.state.userInput +" °",
                 sender: 'BOT',
                 key: 'category',
                 buttons: [{
@@ -657,7 +658,7 @@ class Conversation1 extends Component {
           questions:[
             ...this.state.questions,
             {
-            text: "OK, please put your package in bin number 2 and set the temperature.",
+            text: "OK, please put your package in bin number 1 and set the temperature.",
             key: 'restaurents',
             sender:"BOT",
             buttons: [{
