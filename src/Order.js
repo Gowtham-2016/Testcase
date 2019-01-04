@@ -31,14 +31,16 @@ const imagesArr = [
 
 const bgimg = {
     width: "100%",
-    position: "relative",
-    padding: "20px",
-    height: "477px",
+    height:"100%",
+    position: "absolute",
+    padding: "3px",
+    marginLeft: "20px"
     
 }
 const menuimg = {
-    width: "125px",
-    position: "relative",
+    width: "110px",
+    height: "80px",
+    position: "absolute",
     border:'2px solid #fff'
 }
 // const cardhover:hover = {
@@ -283,10 +285,10 @@ const Menu = (props) => {
     const { expanded, classes } = props;
    
     return (
-        <Card style={{background: '#14191c',height:470}} className={classes.cardhover}>
+        <Card style={{background: '#14191c',height:"98%"}} className={classes.cardhover}>
 
         <ScrollArea
-        speed={0.2}
+            speed={0.2}
             className="area"
             contentClassName="content"
             horizontal={false}>
@@ -307,14 +309,14 @@ const Menu = (props) => {
                                         
                                         Itemss.map((row, j) => {
                                             return (
-                                                <div className="row col-12" onClick={() => props.onItemClick(row)} style={{ padding: 10, cursor: "pointer", borderBottom: "1px solid #ccc" }}>
+                                                <div className="row col-12" onClick={() => props.onItemClick(row)} style={{ padding: 10,margin:0, cursor: "pointer", borderBottom: "1px solid #ccc" }}>
                                                     <div className="col-4">
                                                         <img src={row.imgURL} alt="category" img-responsive style={menuimg} />
                                                     </div>
                                                     <div className="col-8">
                                                         <Typography style={{color:'#fff'}}>
                                                         <div><h4 style={{textAlign: "center",color: "#6ed7e8"}}>{row.name}</h4></div>
-                                                        <Truncate lines={3} ellipsis={<p style={{color:"aqua",textAlign:"justify"}}>.. <a onClick={()=>{
+                                                        <Truncate lines={2} ellipsis={<p style={{color:"aqua"}}>.. <a onClick={()=>{
                                                             props.that.setState({check:1})}}>Read more</a></p>}>
                                                             {row.Description}
                                                         </Truncate>
@@ -534,16 +536,16 @@ class Order extends Component {
         return(
             <Fragment  >
             <Header />
-            <Col lg={12} md={12} sm={12} xs={12} style={{overflowX: "hidden", overflowY: "auto"}}>
+            <Col lg={12} md={12} sm={12} xs={12} style={{overflowX: "hidden",overflowY:"hidden"}}>
             <Row>
 
-            <Col lg={12} md={12} sm={12} xs={12} style={{height:480}}>
+            <Col lg={12} md={12} sm={12} xs={12} style={{height:"70vh"}}>
                 <Row>
                 {this.state.check ?
                 <Fragment>
                 <Col lg={4} md={4} sm={12} xs={12}>
-                <Card style={{background: '#14191c',height:470}}  className={classes.cardhover}>
-                <div className="row" style={{background: '#14191c',height:'470px',margin:0}}>
+                <Card style={{background: '#14191c',height:"98%"}}  className={classes.cardhover}>
+                <div className="row" style={{background: '#14191c',height:'100%',margin:0}}>
                                
                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12" >
                                <div><h2 style={{textAlign: "center",color: "#fff"}}>Item Details</h2></div>
@@ -591,7 +593,7 @@ class Order extends Component {
                            </Card>
                 </Col>
                 <Col lg={4} md={4} sm={12} xs={12} >
-                    <div className="row" style={{height:470}}>
+                    <div className="row" style={{height:"71vh"}}>
                         <Menu onItemClick={(data) => {
                             this.setState({
                                 item: data,
@@ -604,17 +606,15 @@ class Order extends Component {
                 :
                 <Fragment>
                 <Col lg={4} md={4} sm={12} xs={12}>
-                <Card style={{background: '#14191c',height:470}} style={{background: '#14191c',height:470}} className={classes.cardhover}>
-                <Link to="">
+                <Card style={{background: '#14191c',height:"98%"}} className={classes.cardhover}>
                     <div className="row">
                         <img src={"/img/default" + this.state.shop + ".png"} alt="map" responsive style={bgimg} />
                     </div>
-                </Link>
                 </Card>
                 </Col>
                 <Col lg={4} md={4} sm={12} xs={12}>
-                <div className={classes.cardhover}>
-                    <div className="row" style={{height:470}}>
+                <div style={{height:"98%"}} className={classes.cardhover}>
+                    <div className="row" style={{height:"71vh"}}>
                         <Menu onItemClick={(data) => {
                             this.setState({
                                 item: data,
@@ -628,19 +628,19 @@ class Order extends Component {
                 
             }
                     <Col lg={4} md={4} sm={12} xs={12} >
-                        <Card style={{background: '#14191c',height:470}} className={classes.cardhover}>
+                        <Card style={{background: '#14191c',height:"98%"}} className={classes.cardhover}>
                             <Bot ref="Bot" getyummly={this.getyummly} buttonSelect={this.onButtonSelect} />
                         </Card>
                     </Col>
                 </Row>
                 </Col>
-                <Row>
+                <Row style={{height:"20vh"}}>
                     <Col lg={12} md={12} sm={12} xs={12} >
                         <CoverFlow imagesArr={imagesArr} 
                             handleSelect={(index)=>{this.onButtonSelect(index+1)}}
                             direction="horizontal"
                             width="100%"
-                            height={210}
+                            height={200}
                             itemRatio="8:5"
                             background="#1f2528"
                         />

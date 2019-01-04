@@ -157,7 +157,6 @@ class Bot1 extends Component {
     }
     return (
       <div style={{width:'100%'}}>
-        <div>
           <Conversation1  style={{maxWidth: "100% !important" }}
             buttonSelect={this.props.buttonSelect}
             Unlock={this.props.Unlock}
@@ -166,7 +165,6 @@ class Bot1 extends Component {
             onEnded={getUserAnswers}
             theme={theme}
           />
-        </div>
       </div>
     )
   }

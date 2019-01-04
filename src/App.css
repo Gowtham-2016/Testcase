@@ -56,6 +56,7 @@ section{
 
 
 .hAHuss{
+  height: 65vh;
   overflow-x: hidden;
   overflow-y: scroll;
   -webkit-justify-content: unset;
@@ -153,6 +154,7 @@ section{
 }
 
 .ddbLMr{
+  height: 100% !important;
   max-width: 100% !important;
 }
 
