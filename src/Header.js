@@ -79,7 +79,7 @@ class Header extends Component {
       //   </Collapse>
       // </Navbar>
     
-            <Navbar className=" navbar-expand-md  navbar-dark">
+            <Navbar style={{height:'10vh'}} className=" navbar-expand-md  navbar-dark">
             <NavbarToggler onClick={this.toggle}  />
             <div style={{display:"block !important",width:"100%"}}>
             {/* <Nav className="navbar-nav mr-auto  mt-lg-0" navbar>

@@ -140,7 +140,7 @@ class Bot extends Component {
     }
     return (
       <div style={{width:'100%'}}>
-        <div style={{background:"#14191c"}}>
+        <div style={{background:"rgba(20, 25, 28, 0)"}}>
           <Conversation
             getyummly={this.props.getyummly}
             buttonSelect={this.props.buttonSelect}

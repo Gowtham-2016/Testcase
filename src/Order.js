@@ -3,6 +3,8 @@ import { Container, Row, Col, Card, Button} from 'reactstrap';
 import CoverFlow from 'coverflow-react';
 import Header from './Header';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import IconButton from '@material-ui/core/IconButton';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import green from "@material-ui/core/colors/green"; 
 import purple from "@material-ui/core/colors/purple";
@@ -12,6 +14,14 @@ import { withStyles, MuiThemeProvider,
 import Typography from '@material-ui/core/Typography';
 import Truncate from 'react-truncate';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import NewCard from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button1 from '@material-ui/core/Button';
+
 import classNames from "classnames";
 import ScrollArea from "react-scrollbar";
 import { Link } from 'react-router-dom';
@@ -28,6 +38,7 @@ const imagesArr = [
     'img/slider3.jpg',
     'img/slider4.jpg',
 ];
+
 
 const bgimg = {
     width: "100%",
@@ -62,6 +73,14 @@ const theme = createMuiTheme({
     }
   });
 const styless = theme => ({
+    card: {
+        maxWidth: 345,
+    
+      },
+      media: {
+        // ⚠️ object-fit is not supported by IE 11.
+        objectFit: 'cover',
+      },
     container: {
       display: "flex",
       flexWrap: "wrap"
@@ -309,7 +328,7 @@ const Menu = (props) => {
                                         
                                         Itemss.map((row, j) => {
                                             return (
-                                                <div className="row col-12" onClick={() => props.onItemClick(row)} style={{ padding: 10,margin:0, cursor: "pointer", borderBottom: "1px solid #ccc" }}>
+                                                <div className="row col-12" onClick={() => props.onItemClick(row)} style={{ padding: 10,margin:0, cursor: "pointer",minHeight:100, borderBottom: "1px solid #ccc" }}>
                                                     <div className="col-4">
                                                         <img src={row.imgURL} alt="category" img-responsive style={menuimg} />
                                                     </div>
@@ -352,7 +371,9 @@ class Order extends Component {
             completed: 0,
             activeIndex: 0,
             shop: 1,
+            counter: 0,
             data:ShakeShack,
+            like:0,
             expanded: 1,
             item: {},
             check: false
@@ -399,6 +420,7 @@ class Order extends Component {
         }
     }
     componentDidMount() {
+        window.scrollTo(0, 0);
         console.log("order mounted")
         if(this.props.location.state!=undefined){
             console.log(this.props.location.state.val)
@@ -502,6 +524,26 @@ class Order extends Component {
         //progressbar
         this.timer = setInterval(this.progress, 500);
     }
+
+    increment() {
+        this.setState({
+          counter: this.state.counter + 1
+        });
+    }
+      
+    decrement(){
+    if(this.state.counter>0){
+        this.setState({
+        counter: this.state.counter - 1
+    });
+    }
+    }
+    onLike(e){
+        e.preventDefault();
+        this.setState({
+            like:!this.state.like
+        })
+    }
     getyummly = (data,name) => {
         console.log("data from child", data)
         let Yummly = [{
@@ -534,9 +576,10 @@ class Order extends Component {
         const { classes } = this.props;
         const { completed } = this.state;
         return(
-            <Fragment  >
+            <Fragment  style={{height:"100vh"}}>
+             <Col lg={12} md={12} sm={12} xs={12} style={{overflowX: "hidden",overflowY:"scroll"}}>
             <Header />
-            <Col lg={12} md={12} sm={12} xs={12} style={{overflowX: "hidden",overflowY:"hidden"}}>
+           
             <Row>
 
             <Col lg={12} md={12} sm={12} xs={12} style={{height:"70vh"}}>
@@ -545,6 +588,7 @@ class Order extends Component {
                 <Fragment>
                 <Col lg={4} md={4} sm={12} xs={12}>
                 <Card style={{background: '#14191c',height:"98%"}}  className={classes.cardhover}>
+                {/* <Card style={{background: '#14191c',height:"98%"}}  className={classes.cardhover}>
                 <div className="row" style={{background: '#14191c',height:'100%',margin:0}}>
                                
                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12" >
@@ -590,8 +634,66 @@ class Order extends Component {
                                    
                                </div>
                            </div>
-                           </Card>
+                           </Card> */}
+                             <NewCard style={{height:"100%",background:"#14191c"}} className={classes.card}>
+                             <div onClick={()=>this.uncheck()} style={{color:"#3edaeb",paddingTop:5,height:30,float:"right"}}>Back <img style={{height:18,paddingRight:5,paddingBottom:3}} src={"/img/BackArrow.png"}/></div>
+                                <CardActionArea>
+                                    <CardMedia
+                                    component="img"
+                                    alt="Contemplative Reptile"
+                                    className={classes.media}
+                                    height="250px"
+                                    image={this.state.item.imgURL}
+                                    title="Contemplative Reptile"
+                                    />
+                                    <CardContent>
+                                    <Typography style={{color:"#46c5e8"}} gutterBottom variant="h5" component="h2">
+                                       {this.state.item.name}
+                                    </Typography>
+                                    <Typography style={{color:"white"}} component="p">
+                                        {this.state.item.Description}
+                                    </Typography>
+                                    </CardContent>
+                                </CardActionArea>
+                                <Row style={{margin:"0 auto"}}><CardActions style={{position:"absolute",
+                                        bottom:0,
+                                        width:"100%",
+                                    
+                                        }}>
+                                         <Col style={{margin:"0 !important"}} lg={4} md={4} sm={12} xs={12}> 
+                                        <IconButton onClick={(e)=>this.onLike(e)} aria-label="Add to favorites">
+                                            <FavoriteIcon style={{color:(!this.state.like)?('rgb(125, 128, 130)'):("#ec6161")}}/>
+                                        </IconButton>
+                                        </Col>
+                                        <Col  style={{margin:"0 !important"}} lg={4} md={4} sm={12} xs={12}> 
+                                       
+                                            <Row style={{float:"right",marginRight:"30%"}}>
+                                        <img src={"/img/minus.png"}  style={{height:20}} onClick = {(e)=>this.decrement(e)}/> 
+                                           
+                                           <div id='counter' style={{color:"white",padding:"0px 5px 0px 5px"}}>{this.state.counter}</div> 
+                                               
+                                           <img src={"/img/plus.png"} style={{height:20}} onClick = {(e)=>this.increment(e)}/>
+                                           </Row>
+                                        
+                                     
+                                        </Col>
+                                          
+                                    {/* <Button1 style={{color:"#46c5e8"}} size="small" >
+                                    Share
+                                    </Button1> */}
+                                     <Col  style={{margin:"0 !important"}} lg={4} md={4} sm={12} xs={12}>
+                                        <Button1 style={{color:"black",background:"#3edaeb",fontWeight:700,float:"right",marginRight:5}} size="small" >
+                                            Order
+                                        </Button1>
+                                    </Col>
+                                      
+                                </CardActions>       
+                                </Row>
+                                
+                                </NewCard>
+                                </Card>
                 </Col>
+                
                 <Col lg={4} md={4} sm={12} xs={12} >
                     <div className="row" style={{height:"71vh"}}>
                         <Menu onItemClick={(data) => {
@@ -642,7 +744,7 @@ class Order extends Component {
                             width="100%"
                             height={200}
                             itemRatio="8:5"
-                            background="#1f2528"
+                            background="rgba(0, 0, 0, 0)"
                         />
                     </Col>
                 </Row>
