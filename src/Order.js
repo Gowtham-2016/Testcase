@@ -216,15 +216,15 @@ let Yummly1 = [{
     Category:"Menu",
     Items:[{
         Description: "heavy cream, pumpkin purée, sugar, salt",
-        imgURL: "https://lh3.googleusercontent.com/E1_16qjQOwhdEgYdyynZIXPFouY5sGLCWYnLKl8GbL3do0cBhoe7K0z79MWSOdgqrLwqRnkXlp1Nx8rZ3NXBfQ=s90-c",
+        imgURL: "https://lh3.googleusercontent.com/E1_16qjQOwhdEgYdyynZIXPFouY5sGLCWYnLKl8GbL3do0cBhoe7K0z79MWSOdgqrLwqRnkXlp1Nx8rZ3NXBfQ=s180-c",
         name: "Pumpkin Bread Pudding"
     },{
         Description: "spaghetti, lean ground beef, taco seasoning, water",
-        imgURL: "https://lh3.googleusercontent.com/2Y0HIH8Z2F1z7V4H_BhGmLg5jD_COuWAIseNpAvRSOg-iMk9iYb7dgViiERNJlTiK-Jw5GRYvI3Wys6-iChjZw=s90-c",
+        imgURL: "https://lh3.googleusercontent.com/2Y0HIH8Z2F1z7V4H_BhGmLg5jD_COuWAIseNpAvRSOg-iMk9iYb7dgViiERNJlTiK-Jw5GRYvI3Wys6-iChjZw=s180-c",
         name: "Taco Spaghetti"
     },{
         Description: "spaghetti, fresh mushrooms, olive oil, balsamic vinegar",
-        imgURL: "https://lh3.googleusercontent.com/UzdbnDH5IRshn_s2ZwcJBEVG4dvMRFsL42qBIFloVZvI_9IIVWzlpnAoPJI6Goqh0HtSnA0WhZYdx6CUNFFqYw=s90-c",
+        imgURL: "https://lh3.googleusercontent.com/UzdbnDH5IRshn_s2ZwcJBEVG4dvMRFsL42qBIFloVZvI_9IIVWzlpnAoPJI6Goqh0HtSnA0WhZYdx6CUNFFqYw=s180-c",
         name: "Roasted Green Beans & Mushrooms"
     }]
 }];
@@ -304,7 +304,7 @@ const Menu = (props) => {
     const { expanded, classes } = props;
    
     return (
-        <Card style={{background: '#14191c',height:"98%"}} className={classes.cardhover}>
+        <Card style={{background: '#14191c',height:"100%"}} className={classes.cardhover}>
 
         <ScrollArea
             speed={0.2}
@@ -322,8 +322,8 @@ const Menu = (props) => {
                                 <Typography style={{color:"#6ad7e8"}} className={classes.heading}>{item.Category}</Typography>
                                 <Typography className={classes.secondaryHeading}></Typography>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails style={{background:'#14191c',paddingBottom: 0}}>
-                                <div className="row" style={{width:'100%'}}>
+                            <ExpansionPanelDetails style={{background:'#14191c',padding: "0 !important"}}>
+                                <div className="row" style={{width:'100%',margin:"auto"}}>
                                     {   
                                         
                                         Itemss.map((row, j) => {
@@ -374,10 +374,18 @@ class Order extends Component {
             counter: 0,
             data:ShakeShack,
             like:0,
+            OrderedFood:"",
             expanded: 1,
             item: {},
             check: false
         }
+    }
+    onOrder(e){
+        e.preventDefault();
+        this.setState({
+            OrderedFood:this.state.item.name
+        })
+
     }
     handleChange = panel => (event, expanded) => {
         this.setState({
@@ -544,6 +552,8 @@ class Order extends Component {
             like:!this.state.like
         })
     }
+
+    
     getyummly = (data,name) => {
         console.log("data from child", data)
         let Yummly = [{
@@ -577,13 +587,12 @@ class Order extends Component {
         const { completed } = this.state;
         return(
             <Fragment  style={{height:"100vh"}}>
-             <Col lg={12} md={12} sm={12} xs={12} style={{overflowX: "hidden",overflowY:"scroll"}}>
             <Header />
            
             <Row>
 
-            <Col lg={12} md={12} sm={12} xs={12} style={{height:"70vh"}}>
-                <Row>
+            <Col lg={12} md={12} sm={12} xs={12} style={{height:"65vh"}}>
+                <Row style={{height:"100%"}}>
                 {this.state.check ?
                 <Fragment>
                 <Col lg={4} md={4} sm={12} xs={12}>
@@ -637,15 +646,11 @@ class Order extends Component {
                            </Card> */}
                              <NewCard style={{height:"100%",background:"#14191c"}} className={classes.card}>
                              <div onClick={()=>this.uncheck()} style={{color:"#3edaeb",paddingTop:5,height:30,float:"right"}}>Back <img style={{height:18,paddingRight:5,paddingBottom:3}} src={"/img/BackArrow.png"}/></div>
-                                <CardActionArea>
-                                    <CardMedia
-                                    component="img"
-                                    alt="Contemplative Reptile"
-                                    className={classes.media}
-                                    height="250px"
-                                    image={this.state.item.imgURL}
-                                    title="Contemplative Reptile"
-                                    />
+                                <CardActionArea style={{maxHeight:320,overflowY:"scroll"}}>
+                                    <center><img
+                                    style={{height:250,maxWidth:"100%"}}
+                                    src={(this.state.item.imgURL)}
+                                    /></center>
                                     <CardContent>
                                     <Typography style={{color:"#46c5e8"}} gutterBottom variant="h5" component="h2">
                                        {this.state.item.name}
@@ -682,7 +687,7 @@ class Order extends Component {
                                     Share
                                     </Button1> */}
                                      <Col  style={{margin:"0 !important"}} lg={4} md={4} sm={12} xs={12}>
-                                        <Button1 style={{color:"black",background:"#3edaeb",fontWeight:700,float:"right",marginRight:5}} size="small" >
+                                        <Button1 onClick={(e)=>this.onOrder(e)} style={{color:"black",background:"#3edaeb",fontWeight:700,float:"right",marginRight:5}} size="small" >
                                             Order
                                         </Button1>
                                     </Col>
@@ -695,7 +700,7 @@ class Order extends Component {
                 </Col>
                 
                 <Col lg={4} md={4} sm={12} xs={12} >
-                    <div className="row" style={{height:"71vh"}}>
+                    <div className="row" style={{height:"100%",maxHeight:"64vh"}}>
                         <Menu onItemClick={(data) => {
                             this.setState({
                                 item: data,
@@ -715,8 +720,7 @@ class Order extends Component {
                 </Card>
                 </Col>
                 <Col lg={4} md={4} sm={12} xs={12}>
-                <div style={{height:"98%"}} className={classes.cardhover}>
-                    <div className="row" style={{height:"71vh"}}>
+                    <div className="row" style={{height:"100%",maxHeight:"64vh"}}>
                         <Menu onItemClick={(data) => {
                             this.setState({
                                 item: data,
@@ -724,14 +728,13 @@ class Order extends Component {
                             })
                         }} that={this} data={this.state.data} handleChange={this.handleChange} expanded={this.state.expanded} classes={classes} />
                     </div>
-                    </div>
                 </Col>
                 </Fragment>
                 
             }
                     <Col lg={4} md={4} sm={12} xs={12} >
                         <Card style={{background: '#14191c',height:"98%"}} className={classes.cardhover}>
-                            <Bot ref="Bot" getyummly={this.getyummly} buttonSelect={this.onButtonSelect} />
+                            <Bot ref="Bot" OrderedFood={this.state.OrderedFood} getyummly={this.getyummly} buttonSelect={this.onButtonSelect} />
                         </Card>
                     </Col>
                 </Row>
@@ -742,7 +745,7 @@ class Order extends Component {
                             handleSelect={(index)=>{this.onButtonSelect(index+1)}}
                             direction="horizontal"
                             width="100%"
-                            height={200}
+                            height={160}
                             itemRatio="8:5"
                             background="rgba(0, 0, 0, 0)"
                         />
@@ -750,7 +753,6 @@ class Order extends Component {
                 </Row>
                
              </Row>   
-            </Col>
             </Fragment>
 
         );

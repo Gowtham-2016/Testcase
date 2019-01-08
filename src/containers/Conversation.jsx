@@ -62,6 +62,8 @@ class Conversation extends Component {
     }
     this.sortProperties=this.sortProperties.bind(this);
   }
+  // Get the input field
+  
   onImageFocus(e, item) {
     var parent = this.getClosest(e.target, '.slick-list');
     parent.style.overflow = "inherit";
@@ -75,7 +77,6 @@ class Conversation extends Component {
     //     console.log("normal");
     //   }
     // }
-   
     e.target.src = url;
     let style = {
       background:'#fff',
@@ -130,6 +131,18 @@ class Conversation extends Component {
     responsiveVoice.speak(this.state.questions[0].text)
     console.log("did mount")
     document.getElementById("userInput").focus();
+    let input = document.getElementById("userInput");
+
+    // Execute a function when the user releases a key on the keyboard
+    input.addEventListener("keyup", function(event) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Number 13 is the "Enter" key on the keyboard
+      if (event.keyCode === 13) {
+        // Trigger the button element with a click
+        document.getElementById("submitButton").click();
+      }
+    });
   }
   listen(){
     document.getElementById("userInput").focus();
@@ -716,9 +729,10 @@ class Conversation extends Component {
           this.nextQuestion();
       })
       }
+      
       else if ((this.state.userInput.length > 0 || this.props.finalTranscript.length > 0)) {
         console.log(this.state.questions[this.state.questionNumber].key)
-        fetch("https://cors-anywhere.herokuapp.com/https://b1nlb3.herokuapp.com/B1NLP/api/v1.0/command/"+this.state.userInput)
+        fetch("https://cors-anywhere.herokuapp.com/https://b1nlb4.herokuapp.com/B1NLP/api/v1.0/command/"+this.state.userInput)
         .then(response => response.json())
         .then(data =>{
           console.log(data)
@@ -773,6 +787,100 @@ class Conversation extends Component {
               })
             })
           }
+          else if(data.Result.intent && data.Result["FOOD.CATEGORY"] == undefined){
+            console.log(data.Result.intent)
+            let QuestionsArray = this.state.questions;
+            QuestionsArray.splice(this.state.questionNumber+1,0,{
+              text: data.Result.B1_response,
+              sender: 'BOT',
+              key: 'OrderItems',
+              buttons: [{
+                text: 'Back',
+                value: 'Back',
+                key:"Back"
+              }]
+            })
+          this.setState({
+            loadingBot: false,
+            messages: [
+              ...this.state.messages,
+              {
+                text: this.state.userInput,
+                type: 'USER'
+              }
+            ],
+            answers: this.state.questions[this.state.questionNumber].key ? {
+              ...this.state.answers,
+              [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+            } : {
+              ...this.state.answers,
+            },
+            questions:QuestionsArray,
+            userInput: '',
+            loadingBot: true,
+          },()=>{
+            this.setState({
+              userInput:""
+            },()=>{this.props.resetTranscript()
+            this.nextQuestion()
+            })
+          })
+          }
+          else if(data.Result.intent=="OrderFood"){
+            console.log("OrderFood")
+            fetch("https://api.yummly.com/v1/api/recipes?_app_id=e2bd00e5&_app_key=d968774422e49446a02fb726482892a4&q="+data.Result["FOOD.CATEGORY"]+"&maxResult=5")
+              .then(response => response.json())
+              .then(data =>{  
+                this.props.getyummly(data.matches,this.state.userInput)
+                    // if(this.state.questionNumber==0 && this.state.Error==0){
+                    //   responsiveVoice.speak(this.state.questions[0].text)
+                    //   this.userInput.focus();
+                    // }
+                    let QuestionsArray = this.state.questions;
+                      QuestionsArray.splice(this.state.questionNumber+1,0,{
+                        text: "Here are some options for "+this.state.userInput, 
+                        sender: 'BOT',
+                        key: 'OrderItems',
+                        buttons: [{
+                          text: 'Back',
+                          value: 'Back',
+                          key:"Back"
+                        }]
+                      })
+                    this.setState({
+                      loadingBot: false,
+                      messages: [
+                        ...this.state.messages,
+                        {
+                          text: this.state.userInput,
+                          type: 'USER'
+                        }
+                      ],
+                      answers: this.state.questions[this.state.questionNumber].key ? {
+                        ...this.state.answers,
+                        [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+                      } : {
+                        ...this.state.answers,
+                      },
+                      questions:QuestionsArray,
+                      userInput: '',
+                      loadingBot: true,
+                    },()=>{
+                      this.setState({
+                        userInput:""
+                      },()=>{this.props.resetTranscript()
+                      this.nextQuestion()
+                      })
+                    })
+                })
+                .catch((err)=>{
+                  this.setState({
+                    Error:1
+                  })
+                  console.log(err,"Error")
+              })
+          }
+         
           else{
             fetch("https://api.yummly.com/v1/api/recipes?_app_id=e2bd00e5&_app_key=d968774422e49446a02fb726482892a4&q="+data.Result["FOOD.CATEGORY"]+"&maxResult=5")
               .then(response => response.json())
@@ -1207,7 +1315,7 @@ class Conversation extends Component {
           <Container>
           <div style={{background:"#000",float:"left"}}></div>
               <div>
-              <MessageArea id="frame" style={{height:385}}
+              <MessageArea id="frame" style={{}}
               innerRef={div => this.messageArea = div }
             >
            <span style={{height: "400px"}}>
@@ -1267,7 +1375,7 @@ class Conversation extends Component {
               />     
             </div>
             <div className="col-2 text-center p-0" style={{ marginLeft: "-10px"}}>
-            <SubmitButton onClick={(e) => this.submitUserInput(e)} className="submitButton"><img src="img/send.png"/></SubmitButton>            </div>
+            <SubmitButton onClick={(e) => this.submitUserInput(e)} id="submitButton" className="submitButton"><img src="img/send.png"/></SubmitButton>            </div>
             </div>
                        
             </div>

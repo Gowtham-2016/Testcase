@@ -142,6 +142,7 @@ class Bot extends Component {
       <div style={{width:'100%'}}>
         <div style={{background:"rgba(20, 25, 28, 0)"}}>
           <Conversation
+            OrderedFood={this.state.OrderedFood}
             getyummly={this.props.getyummly}
             buttonSelect={this.props.buttonSelect}
             questions={questions}
