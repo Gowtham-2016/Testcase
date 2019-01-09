@@ -3,7 +3,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Header from "./Header";
 import Bot1 from "./Bot1";
 import {Card, Col, Row } from 'reactstrap';
-import Bot from './Bot';
 
 //styles
 const scroll = {
@@ -57,7 +56,6 @@ class Delivery extends Component {
         else if(val==3){
             this.setState({shop:val,Temp:1});
         }
-        
     }
     Unlock = (data,key) => {
         console.log(data,key);

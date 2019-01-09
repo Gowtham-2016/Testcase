@@ -6,6 +6,9 @@ import Typist from 'react-typist';
 import SpeechRecognition from 'react-speech-recognition';
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
+import ReactTypester from 'react-typester';
+import Typed from 'typed.js';
+
 let responsiveVoice = window.responsiveVoice;
 
 const propTypes = {
@@ -14,12 +17,71 @@ const propTypes = {
     resetTranscript: PropTypes.func,
     browserSupportsSpeechRecognition: PropTypes.bool
   }
+ 
 
+
+  class Typer extends React.Component {
+  
+    static defaultProps = {
+      heading: '',
+      dataText: []
+    }
+  
+    constructor(props) {
+      super(props);
+  
+      this.state = {
+        dataText:props.dataText[0],
+        text: '',
+        typingSpeed: 50
+      }
+    }
+    
+    // static getDerivedStateFromProps(props,state){
+    //     if(props.dataText[0]!==state.text){
+    //         return {
+    //             text:""
+    //         }
+    //     }
+    // }
+    
+    componentDidMount() {
+      this.handleType();
+    }
+    
+    handleType = () => {
+      let { dataText } = this.props;
+      let { text, typingSpeed , count } = this.state;
+      let fullText = dataText[0];
+  
+      this.setState({
+        text: dataText[0].substring(0, this.state.text.length + 1),
+        typingSpeed: 50
+      });
+      
+      setTimeout(this.handleType, typingSpeed);
+     
+    };
+  
+    render() {    
+      return (
+        <h2 style={{fontFamily:"Orbitron",color:"#6ed7e8",textAlign:"center"}}>
+             
+        <span>{ this.state.text }</span>
+        <span id="cursor"/>
+        </h2>
+      );
+      
+    }
+  }
+
+
+ 
 class Home extends Component {
     constructor(){
         super();
         this.state = {
-
+            response:"Hello, I’m B1 at your service. How can I help you?"
         }
     }
     listen(){
@@ -33,9 +95,21 @@ class Home extends Component {
         }
       }
       componentDidMount(){
-        responsiveVoice.speak("Hello, I’m B1 at your service. How can I help you?")
+  
+        responsiveVoice.speak(this.state.response)
         console.log("did mount")
       }
+    //   static getDerivedStateFromProps(props, state){
+    //       if(this.state.response!==state.response){
+    //           return {
+    //               ...state,
+    //               response:state.response
+    //           }
+    //       }
+    //       else{
+    //           return null
+    //       }
+    //   }
       componentDidUpdate(){
           console.log('update')
         // if(this.props.finalTranscript==""){
@@ -43,7 +117,7 @@ class Home extends Component {
         // }
         if(this.props.finalTranscript!==""){
           console.log("in update")
-          fetch("https://cors-anywhere.herokuapp.com/https://b1nlb3.herokuapp.com/B1NLP/api/v1.0/command/"+this.props.finalTranscript)
+          fetch("https://cors-anywhere.herokuapp.com/https://b1nlb4.herokuapp.com/B1NLP/api/v1.0/command/"+this.props.finalTranscript)
         .then(response => response.json())
         .then(data =>{
           console.log(data)
@@ -84,6 +158,12 @@ class Home extends Component {
                 }
               }
           }
+          else if(data.Result.intent !== "Delivery" ){
+            this.setState({
+                response:data.Result.B1_response
+            })
+           // this.forceUpdate();
+          }
           else{
             this.props.history.push("/delivery")
           }
@@ -103,10 +183,10 @@ class Home extends Component {
                 <Row style={{overflowX: "hidden", overflowY: "auto",background:"#111315"}}>
                     <Col lg={12} md={12} sm={12} xs={12}>
                         <Row>
-                            <div style={{position: "absolute", top: '10%',left: '52%', transform: 'translate(-50%, -50%)'}}>
-                                <Typist>
-                                    <h1 style={{fontFamily:"Orbitron",color:"#6ed7e8",textAlign:"center"}}>Hello, I’m B1 at your service. How can I help you?</h1>
-                                </Typist>
+                            <div style={{height:"auto",position: "absolute", top: '10%',left: '52%', transform: 'translate(-50%, -50%)'}}>
+                            <Typer
+                                dataText={[this.state.response]} 
+                            />
                             </div>
                            
                            
@@ -141,4 +221,6 @@ Home.propTypes = propTypes
 const options = {
   autoStart: false
 }
+
+
 export default withRouter(SpeechRecognition(options)(Home));
