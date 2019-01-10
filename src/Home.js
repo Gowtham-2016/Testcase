@@ -155,6 +155,10 @@ class Home extends Component {
                 }
               }
           }
+          else if(data.Result.intent == "Open" || data.Result.intent == "Close" || data.Result.intent == "Lock" || data.Result.intent == "Unlock"){
+            console.log("DELIVERY")
+            this.props.history.push("/Delivery")
+          }
           else if(data.Result.intent !== "Delivery" ){
             this.setState({
                 response:data.Result.B1_response
