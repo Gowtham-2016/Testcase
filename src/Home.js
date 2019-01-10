@@ -117,7 +117,7 @@ class Home extends Component {
         // }
         if(this.props.finalTranscript!==""){
           console.log("in update")
-          fetch("https://cors-anywhere.herokuapp.com/https://b1nlb4.herokuapp.com/B1NLP/api/v1.0/command/"+this.props.finalTranscript)
+          fetch("https://cors-anywhere.herokuapp.com/https://b1nlp33.herokuapp.com/B1NLP/api/v1.0/command/"+this.props.finalTranscript)
         .then(response => response.json())
         .then(data =>{
           console.log(data)
@@ -162,6 +162,7 @@ class Home extends Component {
             this.setState({
                 response:data.Result.B1_response
             })
+            responsiveVoice.speak(data.Result.B1_response)
            // this.forceUpdate();
           }
           else{
@@ -188,14 +189,12 @@ class Home extends Component {
                                 dataText={[this.state.response]} 
                             />
                             </div>
-                           
-                           
                             <Col lg={6} md={6} sm={12} xs={12} >
                              <img onClick={() => this.listen()} src={(this.props.listening) ? ("img/bin1on.png") : ("img/bin1off.png")} alt="b1" img-responsive />
                             </Col>
                             <Col lg={6} md={6} sm={12} xs={12} >
                                 <Col lg={12} md={12} sm={12} xs={12} style={{ marginTop: "250px"}}>
-                                    <Link to="/order">
+                                    <Link style={{textDecoration:"none"}} to="/order">
                                         <Card style={{ backgroundColor: "#272E32", width: "400px", height: "100px" }}>
                                             <h3 style={{ color: "#FFF", textAlign: "center", marginTop: "30px", letterSpacing: "6px" }}>ORDER</h3>
                                         </Card>

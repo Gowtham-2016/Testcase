@@ -511,253 +511,296 @@ class Conversation extends Component {
   }
 
   submitUserInput(e) {
-    e.preventDefault();
-    console.log("onSubmit");
-    console.log(this.state.userInput,"input");
-   
-      if(this.props.listening){
-        this.props.stopListening();
-      }
-      // if(this.state.userInput=="supplies"){
-      //   this.setState({
-      //     SuppliesClicked:1,
-      //     showNursingImages:0,
-      //     messages: [
-      //       ...this.state.messages,
-      //       {
-      //         text: "supplies",
-      //         type: 'USER'
-      //       }
-      //     ],
-      //     answers: this.state.questions[this.state.questionNumber].key ? {
-      //       ...this.state.answers,
-      //       [this.state.questions[this.state.questionNumber].key]: "supplies",
-      //     } : {
-      //       ...this.state.answers,
-      //     }
-      //   },() => {
-      //       this.nextQuestion();
-      //   })
-      // }
-      // else if(this.state.userInput=="blankets" || this.state.userInput=="blanket" || this.state.userInput=="bed sheets" ||  this.state.userInput=="bed sheet" || this.state.userInput=="bandages" || this.state.userInput=="IV"){
-      //   this.setState({
-      //     showSuppliesImages:0,
-      //     messages: [
-      //       ...this.state.messages,
-      //       {
-      //         text: this.state.userInput,
-      //         type: 'USER'
-      //       }
-      //     ],
-      //     answers: this.state.questions[this.state.questionNumber].key ? {
-      //       ...this.state.answers,
-      //       [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
-      //     } : {
-      //       ...this.state.answers,
-      //     }
-      //   },() => {
-      //       this.nextQuestion();
-      //   })
-      // }
-      // else if((this.state.userInput=="deliver" || this.state.userInput=="yes")&&this.state.SuppliesClicked==1){
-      // console.log('insert Deliver questions');
-      // //loop again
-      // let QuestionsArray = this.state.questions;
-      // QuestionsArray.splice(this.state.questionNumber+1,0,{
-      //   text: 'For more selection, please tap on the buttons below :',
-      //   sender: 'BOT',
-      //   key: 'OrderItems',
-      // },
-      // {
-      //   text: 'Please Enter or speak the Quantity That you would like to order',
-      //   sender: 'BOT',
-      //   key: 'Quantity',
-      // },
-      // {
-      //   text: 'Please Enter or speak the Room Number that you are admitted in',
-      //   sender: 'BOT',
-      //   key: 'RoomNumberr',
-      // },
-      // {
-      //   text: 'Your Order has been placed, Would you like to order anything else?',
-      //   sender: 'BOT',
-      //   key: 'RoomNumberr',
-      //   buttons:[{
-      //     text: 'Yes',
-      //     value: 'Deliver',
-      //   },{
-      //     text: 'Main Menu',
-      //     value: 'continue',
-      //   }]
-      // })
-      // if(this.state.questions[this.state.questions.length-1].key=="pickup"){
-      //   this.setState({
-      //     question:this.state.questions.pop()
-      //   })
-      // }
-      // if(this.state.SuppliesClicked===1){
-      //   console.log("supplies clicked is 1")
-      //   this.setState({
-      //     showSuppliesImages:1,
-      //     messages: [
-      //       ...this.state.messages,
-      //       {
-      //         text: "Deliver",
-      //         type: 'USER'
-      //       }
-      //     ],
-      //     answers: this.state.questions[this.state.questionNumber].key ? {
-      //       ...this.state.answers,
-      //       [this.state.questions[this.state.questionNumber].key]: "Deliver",
-      //     } : {
-      //       ...this.state.answers,
-      //     },
-      //     questions:QuestionsArray
-      //   },() => {
-      //       this.nextQuestion();
-      //   })
-      // }
-      // }
-      // else if(this.state.userInput=="main menu"){
-      //   this.setState({
-      //     showFoodMenu:0,
-      //     showDrinkMenu:0,
-      //     ShowAssistResults:0,
-      //     SuppliesClicked:0,
-      //     showCategory:1,
-      //     messages: [
-      //       ...this.state.messages,
-      //       {
-      //         text: "main menu",
-      //         type: 'USER'
-      //       }
-      //     ],
-      //     answers: this.state.questions[this.state.questionNumber].key ? {
-      //       ...this.state.answers,
-      //       [this.state.questions[this.state.questionNumber].key]: "main menu",
-      //     } : {
-      //       ...this.state.answers,
-      //     },
-      //     questions:[
-      //       ...this.state.questions,
-      //       {
-      //         text: "What else would you like to try :",
-      //         sender: 'BOT',
-      //         key: 'category',
-              
-      //       }, {
-      //         text: 'Please Select one of the options below :',
-      //         sender: 'BOT',
-      //         key: 'categories',
-             
-      //       }, {
-      //         text: 'For more selection, please tap on the buttons below :',
-      //         sender: 'BOT',
-      //         key: 'courseType',
-      //         buttons: [{
-      //           text: 'Track',
-      //           key: 'Track',
-      //           value: 'Track',
-      //         }, {
-      //           text: 'Pick up',
-      //           key: 'Pickup',
-      //           value: 'Pickup',
-      //         }, {
-      //           text: 'Deliver',
-      //           key: 'Deliver',
-      //           value: 'Deliver',
-      //         }]
-      //       },
-      //       {
-      //         text: 'Please pick up the medication',
-      //         sender: 'BOT',
-      //         key: 'pickup',
-      //         buttons: [{
-      //           text: 'Back',
-      //           value: 'goback',
-      //         },{
-      //           text: 'Main Menu',
-      //           value: 'continue',
-      //         }]
-      //       }
-      //     ]
-      //   },() => {
-      //       this.nextQuestion();
-      //   })
-      // }
-      if(this.state.userInput=="back"){
-        this.setState({
-          messages: [
-            ...this.state.messages,
-            {
-              text: "back",
-              type: 'USER'
-            }
-          ],
-          questions:[
-            ...this.state.questions,
-            {
-              text: "Cool, here are options from the restaurants nearby",
-              key: 'restaurents',
-              sender:"BOT",
-              buttons: [{
-                text: 'Shake Shack',
-                key: 'restaurents',
-                value: '1',
-              }, {
-                text: 'Roasting Plant',
-                key: 'restaurents',
-                value: '2',
-              }, {
-                text: 'Plum Market',
-                key: 'restaurents',
-                value: '3',
-              }, {
-                text: 'Yummly',
-                key: 'restaurents',
-                value: '4',
+    if(this.state.userInput.length>0){
+      e.preventDefault();
+      console.log("onSubmit");
+      console.log(this.state.userInput,"input");
+     
+        if(this.props.listening){
+          this.props.stopListening();
+        }
+        // if(this.state.userInput=="supplies"){
+        //   this.setState({
+        //     SuppliesClicked:1,
+        //     showNursingImages:0,
+        //     messages: [
+        //       ...this.state.messages,
+        //       {
+        //         text: "supplies",
+        //         type: 'USER'
+        //       }
+        //     ],
+        //     answers: this.state.questions[this.state.questionNumber].key ? {
+        //       ...this.state.answers,
+        //       [this.state.questions[this.state.questionNumber].key]: "supplies",
+        //     } : {
+        //       ...this.state.answers,
+        //     }
+        //   },() => {
+        //       this.nextQuestion();
+        //   })
+        // }
+        // else if(this.state.userInput=="blankets" || this.state.userInput=="blanket" || this.state.userInput=="bed sheets" ||  this.state.userInput=="bed sheet" || this.state.userInput=="bandages" || this.state.userInput=="IV"){
+        //   this.setState({
+        //     showSuppliesImages:0,
+        //     messages: [
+        //       ...this.state.messages,
+        //       {
+        //         text: this.state.userInput,
+        //         type: 'USER'
+        //       }
+        //     ],
+        //     answers: this.state.questions[this.state.questionNumber].key ? {
+        //       ...this.state.answers,
+        //       [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+        //     } : {
+        //       ...this.state.answers,
+        //     }
+        //   },() => {
+        //       this.nextQuestion();
+        //   })
+        // }
+        // else if((this.state.userInput=="deliver" || this.state.userInput=="yes")&&this.state.SuppliesClicked==1){
+        // console.log('insert Deliver questions');
+        // //loop again
+        // let QuestionsArray = this.state.questions;
+        // QuestionsArray.splice(this.state.questionNumber+1,0,{
+        //   text: 'For more selection, please tap on the buttons below :',
+        //   sender: 'BOT',
+        //   key: 'OrderItems',
+        // },
+        // {
+        //   text: 'Please Enter or speak the Quantity That you would like to order',
+        //   sender: 'BOT',
+        //   key: 'Quantity',
+        // },
+        // {
+        //   text: 'Please Enter or speak the Room Number that you are admitted in',
+        //   sender: 'BOT',
+        //   key: 'RoomNumberr',
+        // },
+        // {
+        //   text: 'Your Order has been placed, Would you like to order anything else?',
+        //   sender: 'BOT',
+        //   key: 'RoomNumberr',
+        //   buttons:[{
+        //     text: 'Yes',
+        //     value: 'Deliver',
+        //   },{
+        //     text: 'Main Menu',
+        //     value: 'continue',
+        //   }]
+        // })
+        // if(this.state.questions[this.state.questions.length-1].key=="pickup"){
+        //   this.setState({
+        //     question:this.state.questions.pop()
+        //   })
+        // }
+        // if(this.state.SuppliesClicked===1){
+        //   console.log("supplies clicked is 1")
+        //   this.setState({
+        //     showSuppliesImages:1,
+        //     messages: [
+        //       ...this.state.messages,
+        //       {
+        //         text: "Deliver",
+        //         type: 'USER'
+        //       }
+        //     ],
+        //     answers: this.state.questions[this.state.questionNumber].key ? {
+        //       ...this.state.answers,
+        //       [this.state.questions[this.state.questionNumber].key]: "Deliver",
+        //     } : {
+        //       ...this.state.answers,
+        //     },
+        //     questions:QuestionsArray
+        //   },() => {
+        //       this.nextQuestion();
+        //   })
+        // }
+        // }
+        // else if(this.state.userInput=="main menu"){
+        //   this.setState({
+        //     showFoodMenu:0,
+        //     showDrinkMenu:0,
+        //     ShowAssistResults:0,
+        //     SuppliesClicked:0,
+        //     showCategory:1,
+        //     messages: [
+        //       ...this.state.messages,
+        //       {
+        //         text: "main menu",
+        //         type: 'USER'
+        //       }
+        //     ],
+        //     answers: this.state.questions[this.state.questionNumber].key ? {
+        //       ...this.state.answers,
+        //       [this.state.questions[this.state.questionNumber].key]: "main menu",
+        //     } : {
+        //       ...this.state.answers,
+        //     },
+        //     questions:[
+        //       ...this.state.questions,
+        //       {
+        //         text: "What else would you like to try :",
+        //         sender: 'BOT',
+        //         key: 'category',
+                
+        //       }, {
+        //         text: 'Please Select one of the options below :',
+        //         sender: 'BOT',
+        //         key: 'categories',
+               
+        //       }, {
+        //         text: 'For more selection, please tap on the buttons below :',
+        //         sender: 'BOT',
+        //         key: 'courseType',
+        //         buttons: [{
+        //           text: 'Track',
+        //           key: 'Track',
+        //           value: 'Track',
+        //         }, {
+        //           text: 'Pick up',
+        //           key: 'Pickup',
+        //           value: 'Pickup',
+        //         }, {
+        //           text: 'Deliver',
+        //           key: 'Deliver',
+        //           value: 'Deliver',
+        //         }]
+        //       },
+        //       {
+        //         text: 'Please pick up the medication',
+        //         sender: 'BOT',
+        //         key: 'pickup',
+        //         buttons: [{
+        //           text: 'Back',
+        //           value: 'goback',
+        //         },{
+        //           text: 'Main Menu',
+        //           value: 'continue',
+        //         }]
+        //       }
+        //     ]
+        //   },() => {
+        //       this.nextQuestion();
+        //   })
+        // }
+        if(this.state.userInput=="back"){
+          this.setState({
+            messages: [
+              ...this.state.messages,
+              {
+                text: "back",
+                type: 'USER'
               }
-          ]}
-        ],
-          answers: this.state.questions[this.state.questionNumber].key ? {
-            ...this.state.answers,
-            [this.state.questions[this.state.questionNumber].key]: "back",
-          } : {
-            ...this.state.answers,
-          }
-        },() => {
-          this.nextQuestion();
-      })
-      }
-      
-      else if ((this.state.userInput.length > 0 || this.props.finalTranscript.length > 0)) {
-        console.log(this.state.questions[this.state.questionNumber].key)
-        fetch("https://cors-anywhere.herokuapp.com/https://b1nlb4.herokuapp.com/B1NLP/api/v1.0/command/"+this.state.userInput)
-        .then(response => response.json())
-        .then(data =>{
-          console.log(data)
-          if(typeof(data.Result.B1_response)=="string"&&data.Result["RESTAURANT.NAME"]!=undefined){
-            if(data.Result["RESTAURANT.NAME"]=="shake shack" || data.Result["RESTAURANT.NAME"]=="Shake Shack"){
-              this.props.buttonSelect(1);
+            ],
+            questions:[
+              ...this.state.questions,
+              {
+                text: "Cool, here are options from the restaurants nearby",
+                key: 'restaurents',
+                sender:"BOT",
+                buttons: [{
+                  text: 'Shake Shack',
+                  key: 'restaurents',
+                  value: '1',
+                }, {
+                  text: 'Roasting Plant',
+                  key: 'restaurents',
+                  value: '2',
+                }, {
+                  text: 'Plum Market',
+                  key: 'restaurents',
+                  value: '3',
+                }, {
+                  text: 'Yummly',
+                  key: 'restaurents',
+                  value: '4',
+                }
+            ]}
+          ],
+            answers: this.state.questions[this.state.questionNumber].key ? {
+              ...this.state.answers,
+              [this.state.questions[this.state.questionNumber].key]: "back",
+            } : {
+              ...this.state.answers,
             }
-            else if(data.Result["RESTAURANT.NAME"]=="plum market"){
-              this.props.buttonSelect(3);
+          },() => {
+            this.nextQuestion();
+        })
+        }
+        
+        else if ((this.state.userInput.length > 0 || this.props.finalTranscript.length > 0)) {
+          console.log(this.state.questions[this.state.questionNumber].key)
+          fetch("https://cors-anywhere.herokuapp.com/https://b1nlp33.herokuapp.com/B1NLP/api/v1.0/command/"+this.state.userInput)
+          .then(response => response.json())
+          .then(data =>{
+            console.log(data)
+            if(typeof(data.Result.B1_response)=="string"&&data.Result["RESTAURANT.NAME"]!=undefined){
+              if(data.Result["RESTAURANT.NAME"]=="shake shack" || data.Result["RESTAURANT.NAME"]=="Shake Shack"){
+                this.props.buttonSelect(1);
+              }
+              else if(data.Result["RESTAURANT.NAME"]=="plum market"){
+                this.props.buttonSelect(3);
+              }
+              else if(data.Result["RESTAURANT.NAME"]=="roasting plant" || "roasting plant coffee"){
+                this.props.buttonSelect(2);
+              }
+              let Response=data.Result.B1_response;
+              let QuestionsArray = this.state.questions;
+              QuestionsArray.splice(this.state.questionNumber+1,0,{
+                text: Response, 
+                sender: 'BOT',
+                key: 'OrderItems',
+                buttons: [{
+                  text: 'Back',
+                  value: 'Back',
+                  key:"Back"
+                }]
+              })
+              this.setState({
+                loadingBot: false,
+                messages: [
+                  ...this.state.messages,
+                  {
+                    text: this.state.userInput,
+                    type: 'USER'
+                  }
+                ],
+                answers: this.state.questions[this.state.questionNumber].key ? {
+                  ...this.state.answers,
+                  [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+                } : {
+                  ...this.state.answers,
+                },
+                questions:QuestionsArray,
+                showCategory:0,
+                showNursingImages:0,
+                showSuppliesImages:0,
+                userInput: '',
+                loadingBot: true,
+              },()=>{
+                this.setState({
+                  userInput:""
+                },()=>{this.props.resetTranscript()
+                this.nextQuestion()
+                })
+              })
             }
-            else if(data.Result["RESTAURANT.NAME"]=="roasting plant" || "roasting plant coffee"){
-              this.props.buttonSelect(2);
-            }
-            let Response=data.Result.B1_response;
-            let QuestionsArray = this.state.questions;
-            QuestionsArray.splice(this.state.questionNumber+1,0,{
-              text: Response, 
-              sender: 'BOT',
-              key: 'OrderItems',
-              buttons: [{
-                text: 'Back',
-                value: 'Back',
-                key:"Back"
-              }]
-            })
+            else if(data.Result.intent && data.Result["FOOD.CATEGORY"] == undefined){
+              console.log(data.Result.intent)
+              let QuestionsArray = this.state.questions;
+              QuestionsArray.splice(this.state.questionNumber+1,0,{
+                text: data.Result.B1_response,
+                sender: 'BOT',
+                key: 'OrderItems',
+                buttons: [{
+                  text: 'Back',
+                  value: 'Back',
+                  key:"Back"
+                }]
+              })
             this.setState({
               loadingBot: false,
               messages: [
@@ -774,9 +817,6 @@ class Conversation extends Component {
                 ...this.state.answers,
               },
               questions:QuestionsArray,
-              showCategory:0,
-              showNursingImages:0,
-              showSuppliesImages:0,
               userInput: '',
               loadingBot: true,
             },()=>{
@@ -786,20 +826,398 @@ class Conversation extends Component {
               this.nextQuestion()
               })
             })
-          }
-          else if(data.Result.intent && data.Result["FOOD.CATEGORY"] == undefined){
-            console.log(data.Result.intent)
-            let QuestionsArray = this.state.questions;
-            QuestionsArray.splice(this.state.questionNumber+1,0,{
-              text: data.Result.B1_response,
-              sender: 'BOT',
-              key: 'OrderItems',
-              buttons: [{
-                text: 'Back',
-                value: 'Back',
-                key:"Back"
-              }]
+            }
+            else if(data.Result.intent=="OrderFood"){
+              console.log("OrderFood")
+              fetch("https://api.yummly.com/v1/api/recipes?_app_id=e2bd00e5&_app_key=d968774422e49446a02fb726482892a4&q="+data.Result["FOOD.CATEGORY"]+"&maxResult=5")
+                .then(response => response.json())
+                .then(data =>{  
+                  this.props.getyummly(data.matches,this.state.userInput)
+                      // if(this.state.questionNumber==0 && this.state.Error==0){
+                      //   responsiveVoice.speak(this.state.questions[0].text)
+                      //   this.userInput.focus();
+                      // }
+                      let QuestionsArray = this.state.questions;
+                        QuestionsArray.splice(this.state.questionNumber+1,0,{
+                          text: "Here are some options for "+this.state.userInput, 
+                          sender: 'BOT',
+                          key: 'OrderItems',
+                          buttons: [{
+                            text: 'Back',
+                            value: 'Back',
+                            key:"Back"
+                          }]
+                        })
+                      this.setState({
+                        loadingBot: false,
+                        messages: [
+                          ...this.state.messages,
+                          {
+                            text: this.state.userInput,
+                            type: 'USER'
+                          }
+                        ],
+                        answers: this.state.questions[this.state.questionNumber].key ? {
+                          ...this.state.answers,
+                          [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+                        } : {
+                          ...this.state.answers,
+                        },
+                        questions:QuestionsArray,
+                        userInput: '',
+                        loadingBot: true,
+                      },()=>{
+                        this.setState({
+                          userInput:""
+                        },()=>{this.props.resetTranscript()
+                        this.nextQuestion()
+                        })
+                      })
+                  })
+                  .catch((err)=>{
+                    this.setState({
+                      Error:1
+                    })
+                    console.log(err,"Error")
+                })
+            }
+           
+            else{
+              fetch("https://api.yummly.com/v1/api/recipes?_app_id=e2bd00e5&_app_key=d968774422e49446a02fb726482892a4&q="+data.Result["FOOD.CATEGORY"]+"&maxResult=5")
+                .then(response => response.json())
+                .then(data =>{  
+                  this.props.getyummly(data.matches,this.state.userInput)
+                      // if(this.state.questionNumber==0 && this.state.Error==0){
+                      //   responsiveVoice.speak(this.state.questions[0].text)
+                      //   this.userInput.focus();
+                      // }
+                      let QuestionsArray = this.state.questions;
+                        QuestionsArray.splice(this.state.questionNumber+1,0,{
+                          text: "Here are some options for "+this.state.userInput, 
+                          sender: 'BOT',
+                          key: 'OrderItems',
+                          buttons: [{
+                            text: 'Back',
+                            value: 'Back',
+                            key:"Back"
+                          }]
+                        })
+                      this.setState({
+                        loadingBot: false,
+                        messages: [
+                          ...this.state.messages,
+                          {
+                            text: this.state.userInput,
+                            type: 'USER'
+                          }
+                        ],
+                        answers: this.state.questions[this.state.questionNumber].key ? {
+                          ...this.state.answers,
+                          [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+                        } : {
+                          ...this.state.answers,
+                        },
+                        questions:QuestionsArray,
+                        userInput: '',
+                        loadingBot: true,
+                      },()=>{
+                        this.setState({
+                          userInput:""
+                        },()=>{this.props.resetTranscript()
+                        this.nextQuestion()
+                        })
+                      })
+                  })
+                  .catch((err)=>{
+                    this.setState({
+                      Error:1
+                    })
+                    console.log(err,"Error")
+                })
+            }
+            // else{
+            //   console.log('else');
+            //   let QuestionsArray = this.state.questions;
+            //   let response = <div>Discharge Instructions :<br/>
+            //   {data.Result.response[0].instructions.map((res,i)=>{
+            //       return <p key={i} style={{fontSize:13}}>&nbsp;&nbsp;&nbsp;&nbsp;{res}</p>  
+            //   })}</div>
+            //   QuestionsArray.splice(this.state.questionNumber+1,0,{
+            //     text: response, 
+            //     sender: 'BOT',
+            //     key: 'OrderItems',
+            //     buttons: [{
+            //       text: 'Main Menu',
+            //       value: 'continue',
+            //     }]
+            //   })
+            //   this.setState({
+            //     loadingBot: false,
+            //     messages: [
+            //       ...this.state.messages,
+            //       {
+            //         text: this.state.userInput,
+            //         type: 'USER'
+            //       }
+            //     ],
+            //     answers: this.state.questions[this.state.questionNumber].key ? {
+            //       ...this.state.answers,
+            //       [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+            //     } : {
+            //       ...this.state.answers,
+            //     },
+            //     questions:QuestionsArray,
+            //     showCategory:0,
+            //     showNursingImages:0,
+            //     showSuppliesImages:0,
+            //     userInput: '',
+            //     loadingBot: true,
+            //   },()=>{
+            //     this.setState({
+            //       userInput:""
+            //     },()=>{this.props.resetTranscript()
+            //     this.nextQuestion()
+            //     })
+            //   })
+            // }
+          
             })
+            .catch((err)=>{
+              this.setState({
+                Error:1
+              })
+            })
+        }
+        // else if(this.state.userInput.length>0&&this.state.userInput.length<15&&this.state.questions[this.state.questionNumber].key=="category"){
+        //   console.log("category");
+        //   this.setState({
+        //     courseType:this.state.userInput,
+        //     showCategory:0,
+        //     showNursingImages:1,
+        //     messages: [
+        //       ...this.state.messages,
+        //       {
+        //         text: this.state.userInput,
+        //         type: 'USER'
+        //       }
+        //     ],
+        //     answers: this.state.questions[this.state.questionNumber].key ? {
+        //       ...this.state.answers,
+        //       [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+        //     } : {
+        //       ...this.state.answers,
+        //     },
+        //     userInput: '',
+        //     loadingBot: true,
+        //   },()=>{
+        //     this.setState({
+        //       userInput:""
+        //     },()=>{
+        //     this.nextQuestion()
+        //     })
+        //   })
+        // }
+        // else if(this.state.userInput.length>0&&this.state.userInput.length<15&&this.state.questions[this.state.questionNumber].key=="categories"){
+        //   if(this.state.userInput=="supplies"){
+        //     console.log("supplies clicked")
+        //     this.setState({
+        //       SuppliesClicked:1
+        //     })
+        //   }
+        //   else{
+        //     console.log("medications clicked")
+        //     this.setState({
+        //       SuppliesClicked:0
+        //     })
+        //   }
+        
+        //   this.setState({
+        //     courseType:this.state.userInput,
+        //     showCategory:0,
+        //     showNursingImages:0,
+        //     messages: [
+        //       ...this.state.messages,
+        //       {
+        //         text: this.state.userInput,
+        //         type: 'USER'
+        //       }
+        //     ],
+        //     answers: this.state.questions[this.state.questionNumber].key ? {
+        //       ...this.state.answers,
+        //       [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+        //     } : {
+        //       ...this.state.answers,
+        //     },
+        //     userInput: '',
+        //     loadingBot: true,
+        //   },()=>{
+        //     this.setState({
+        //       userInput:""
+        //     },()=>{
+        //     this.nextQuestion()
+        //     })
+        //   })
+        // }
+        // else if((this.state.questions[this.state.questionNumber].key=="coursekind")&&(this.checkButtons(this.state.questions[this.state.questionNumber].buttons)==1)){
+        //   console.log("course kind on submit")
+        //   fetch("https://api.yummly.com/v1/api/recipes?_app_id=e2bd00e5&_app_key=d968774422e49446a02fb726482892a4&q="+this.state.userInput+"&maxResult=50")
+        //   .then(response => response.json())
+        //   .then(data =>{
+        //     this.setState({ 
+        //           showDrinkMenu:0,
+        //           showFoodMenu:0,
+        //           showStores:0,
+        //           Data: data.matches,
+        //           key:1
+        //      })
+        //         if(this.state.questionNumber==0 && this.state.Error==0){
+        //           responsiveVoice.speak(this.state.questions[0].text)
+        //           this.userInput.focus();
+        //         }
+        //     })
+        //     .catch((err)=>{
+        //       this.setState({
+        //         Error:1
+        //       })
+        //       console.log(err,"Error")
+        //   })
+        // }
+  
+  
+  
+        // else if ((this.state.userInput.length > 0 || this.props.finalTranscript.length > 0)&&(this.state.questions[this.state.questionNumber].key!=="Quantity")&&(this.state.questions[this.state.questionNumber].key!="RoomNumber")) {
+        //   console.log(this.state.questions[this.state.questionNumber].key)
+        //   fetch("https://cors-anywhere.herokuapp.com/https://b1nlp.herokuapp.com/B1NLP/api/v1.0/command/"+this.state.userInput)
+        //   .then(response => response.json())
+        //   .then(data =>{
+        //     console.log(data)
+        //     console.log(typeof(data.Result.response))
+        //     if(typeof(data.Result.response)=="string"){
+        //       console.log('if')
+        //       let Response="";
+        //       let Destination="";
+        //       let Type="";
+        //       let quantity="";
+        //       if(data.Result.intent=="Bring supplies"){
+        //         if(data.Result.quantity!=undefined){
+        //           quantity=data.Result.quantity+" ";
+        //         }
+        //         if(data.Result.type!=undefined){
+        //           Response = "Ok, I will bring you "+quantity+data.Result.type+" "+data.Result.supplies[0];
+        //           if(data.Result.destination!=undefined){
+        //             Destination=" from the "+data.Result.destination+" in a few minutes."
+        //           };
+        //         }
+        //         else{
+        //           Response = "Ok, I will bring you "+quantity+data.Result.supplies[0];
+        //           if(data.Result.destination!=undefined){
+        //             Destination=" from the "+data.Result.destination+" in a few minutes."
+        //           }
+        //         }
+        //       }
+        //       else if(data.Result.intent=="Guide"){
+        //         Response=data.Result.response+" to "+data.Result.destination+".";
+        //       }
+        //       else if(data.Result.intent=="Move to place"){
+        //         Response= "Sure, I will go to "+data.Result.destination+" and wait for you.";
+        //       }
+        //       else{
+        //         Response=data.Result.response
+        //       }
+        //       let QuestionsArray = this.state.questions;
+        //       QuestionsArray.splice(this.state.questionNumber+1,0,{
+        //         text: Response+Destination, 
+        //         sender: 'BOT',
+        //         key: 'OrderItems',
+        //         buttons: [{
+        //           text: 'Main Menu',
+        //           value: 'continue',
+        //         }]
+        //       })
+        //       console.log(data.Result.response,data.Result.intent)
+        //       this.setState({
+        //         loadingBot: false,
+        //         messages: [
+        //           ...this.state.messages,
+        //           {
+        //             text: this.state.userInput,
+        //             type: 'USER'
+        //           }
+        //         ],
+        //         answers: this.state.questions[this.state.questionNumber].key ? {
+        //           ...this.state.answers,
+        //           [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+        //         } : {
+        //           ...this.state.answers,
+        //         },
+        //         questions:QuestionsArray,
+        //         showCategory:0,
+        //         showNursingImages:0,
+        //         showSuppliesImages:0,
+        //         userInput: '',
+        //         loadingBot: true,
+        //       },()=>{
+        //         this.setState({
+        //           userInput:""
+        //         },()=>{this.props.resetTranscript()
+        //         this.nextQuestion()
+        //         })
+        //       })
+        //     }
+        //     else{
+        //       console.log('else');
+        //       let QuestionsArray = this.state.questions;
+        //       let response = <div>Discharge Instructions :<br/>
+        //       {data.Result.response[0].instructions.map((res,i)=>{
+        //          return <p key={i} style={{fontSize:13}}>&nbsp;&nbsp;&nbsp;&nbsp;{res}</p>  
+        //       })}</div>
+        //       QuestionsArray.splice(this.state.questionNumber+1,0,{
+        //         text: response, 
+        //         sender: 'BOT',
+        //         key: 'OrderItems',
+        //         buttons: [{
+        //           text: 'Main Menu',
+        //           value: 'continue',
+        //         }]
+        //       })
+        //       this.setState({
+        //         loadingBot: false,
+        //         messages: [
+        //           ...this.state.messages,
+        //           {
+        //             text: this.state.userInput,
+        //             type: 'USER'
+        //           }
+        //         ],
+        //         answers: this.state.questions[this.state.questionNumber].key ? {
+        //           ...this.state.answers,
+        //           [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+        //         } : {
+        //           ...this.state.answers,
+        //         },
+        //         questions:QuestionsArray,
+        //         showCategory:0,
+        //         showNursingImages:0,
+        //         showSuppliesImages:0,
+        //         userInput: '',
+        //         loadingBot: true,
+        //       },()=>{
+        //         this.setState({
+        //           userInput:""
+        //         },()=>{this.props.resetTranscript()
+        //         this.nextQuestion()
+        //         })
+        //       })
+        //     }
+          
+        //     })
+        //     .catch((err)=>{
+        //       this.setState({
+        //         Error:1
+        //       })
+        //     })
+        // }
+        else{
           this.setState({
             loadingBot: false,
             messages: [
@@ -815,7 +1233,6 @@ class Conversation extends Component {
             } : {
               ...this.state.answers,
             },
-            questions:QuestionsArray,
             userInput: '',
             loadingBot: true,
           },()=>{
@@ -825,423 +1242,9 @@ class Conversation extends Component {
             this.nextQuestion()
             })
           })
-          }
-          else if(data.Result.intent=="OrderFood"){
-            console.log("OrderFood")
-            fetch("https://api.yummly.com/v1/api/recipes?_app_id=e2bd00e5&_app_key=d968774422e49446a02fb726482892a4&q="+data.Result["FOOD.CATEGORY"]+"&maxResult=5")
-              .then(response => response.json())
-              .then(data =>{  
-                this.props.getyummly(data.matches,this.state.userInput)
-                    // if(this.state.questionNumber==0 && this.state.Error==0){
-                    //   responsiveVoice.speak(this.state.questions[0].text)
-                    //   this.userInput.focus();
-                    // }
-                    let QuestionsArray = this.state.questions;
-                      QuestionsArray.splice(this.state.questionNumber+1,0,{
-                        text: "Here are some options for "+this.state.userInput, 
-                        sender: 'BOT',
-                        key: 'OrderItems',
-                        buttons: [{
-                          text: 'Back',
-                          value: 'Back',
-                          key:"Back"
-                        }]
-                      })
-                    this.setState({
-                      loadingBot: false,
-                      messages: [
-                        ...this.state.messages,
-                        {
-                          text: this.state.userInput,
-                          type: 'USER'
-                        }
-                      ],
-                      answers: this.state.questions[this.state.questionNumber].key ? {
-                        ...this.state.answers,
-                        [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
-                      } : {
-                        ...this.state.answers,
-                      },
-                      questions:QuestionsArray,
-                      userInput: '',
-                      loadingBot: true,
-                    },()=>{
-                      this.setState({
-                        userInput:""
-                      },()=>{this.props.resetTranscript()
-                      this.nextQuestion()
-                      })
-                    })
-                })
-                .catch((err)=>{
-                  this.setState({
-                    Error:1
-                  })
-                  console.log(err,"Error")
-              })
-          }
-         
-          else{
-            fetch("https://api.yummly.com/v1/api/recipes?_app_id=e2bd00e5&_app_key=d968774422e49446a02fb726482892a4&q="+data.Result["FOOD.CATEGORY"]+"&maxResult=5")
-              .then(response => response.json())
-              .then(data =>{  
-                this.props.getyummly(data.matches,this.state.userInput)
-                    // if(this.state.questionNumber==0 && this.state.Error==0){
-                    //   responsiveVoice.speak(this.state.questions[0].text)
-                    //   this.userInput.focus();
-                    // }
-                    let QuestionsArray = this.state.questions;
-                      QuestionsArray.splice(this.state.questionNumber+1,0,{
-                        text: "Here are some options for "+this.state.userInput, 
-                        sender: 'BOT',
-                        key: 'OrderItems',
-                        buttons: [{
-                          text: 'Back',
-                          value: 'Back',
-                          key:"Back"
-                        }]
-                      })
-                    this.setState({
-                      loadingBot: false,
-                      messages: [
-                        ...this.state.messages,
-                        {
-                          text: this.state.userInput,
-                          type: 'USER'
-                        }
-                      ],
-                      answers: this.state.questions[this.state.questionNumber].key ? {
-                        ...this.state.answers,
-                        [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
-                      } : {
-                        ...this.state.answers,
-                      },
-                      questions:QuestionsArray,
-                      userInput: '',
-                      loadingBot: true,
-                    },()=>{
-                      this.setState({
-                        userInput:""
-                      },()=>{this.props.resetTranscript()
-                      this.nextQuestion()
-                      })
-                    })
-                })
-                .catch((err)=>{
-                  this.setState({
-                    Error:1
-                  })
-                  console.log(err,"Error")
-              })
-          }
-          // else{
-          //   console.log('else');
-          //   let QuestionsArray = this.state.questions;
-          //   let response = <div>Discharge Instructions :<br/>
-          //   {data.Result.response[0].instructions.map((res,i)=>{
-          //       return <p key={i} style={{fontSize:13}}>&nbsp;&nbsp;&nbsp;&nbsp;{res}</p>  
-          //   })}</div>
-          //   QuestionsArray.splice(this.state.questionNumber+1,0,{
-          //     text: response, 
-          //     sender: 'BOT',
-          //     key: 'OrderItems',
-          //     buttons: [{
-          //       text: 'Main Menu',
-          //       value: 'continue',
-          //     }]
-          //   })
-          //   this.setState({
-          //     loadingBot: false,
-          //     messages: [
-          //       ...this.state.messages,
-          //       {
-          //         text: this.state.userInput,
-          //         type: 'USER'
-          //       }
-          //     ],
-          //     answers: this.state.questions[this.state.questionNumber].key ? {
-          //       ...this.state.answers,
-          //       [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
-          //     } : {
-          //       ...this.state.answers,
-          //     },
-          //     questions:QuestionsArray,
-          //     showCategory:0,
-          //     showNursingImages:0,
-          //     showSuppliesImages:0,
-          //     userInput: '',
-          //     loadingBot: true,
-          //   },()=>{
-          //     this.setState({
-          //       userInput:""
-          //     },()=>{this.props.resetTranscript()
-          //     this.nextQuestion()
-          //     })
-          //   })
-          // }
-        
-          })
-          .catch((err)=>{
-            this.setState({
-              Error:1
-            })
-          })
-      }
-      // else if(this.state.userInput.length>0&&this.state.userInput.length<15&&this.state.questions[this.state.questionNumber].key=="category"){
-      //   console.log("category");
-      //   this.setState({
-      //     courseType:this.state.userInput,
-      //     showCategory:0,
-      //     showNursingImages:1,
-      //     messages: [
-      //       ...this.state.messages,
-      //       {
-      //         text: this.state.userInput,
-      //         type: 'USER'
-      //       }
-      //     ],
-      //     answers: this.state.questions[this.state.questionNumber].key ? {
-      //       ...this.state.answers,
-      //       [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
-      //     } : {
-      //       ...this.state.answers,
-      //     },
-      //     userInput: '',
-      //     loadingBot: true,
-      //   },()=>{
-      //     this.setState({
-      //       userInput:""
-      //     },()=>{
-      //     this.nextQuestion()
-      //     })
-      //   })
-      // }
-      // else if(this.state.userInput.length>0&&this.state.userInput.length<15&&this.state.questions[this.state.questionNumber].key=="categories"){
-      //   if(this.state.userInput=="supplies"){
-      //     console.log("supplies clicked")
-      //     this.setState({
-      //       SuppliesClicked:1
-      //     })
-      //   }
-      //   else{
-      //     console.log("medications clicked")
-      //     this.setState({
-      //       SuppliesClicked:0
-      //     })
-      //   }
-      
-      //   this.setState({
-      //     courseType:this.state.userInput,
-      //     showCategory:0,
-      //     showNursingImages:0,
-      //     messages: [
-      //       ...this.state.messages,
-      //       {
-      //         text: this.state.userInput,
-      //         type: 'USER'
-      //       }
-      //     ],
-      //     answers: this.state.questions[this.state.questionNumber].key ? {
-      //       ...this.state.answers,
-      //       [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
-      //     } : {
-      //       ...this.state.answers,
-      //     },
-      //     userInput: '',
-      //     loadingBot: true,
-      //   },()=>{
-      //     this.setState({
-      //       userInput:""
-      //     },()=>{
-      //     this.nextQuestion()
-      //     })
-      //   })
-      // }
-      // else if((this.state.questions[this.state.questionNumber].key=="coursekind")&&(this.checkButtons(this.state.questions[this.state.questionNumber].buttons)==1)){
-      //   console.log("course kind on submit")
-      //   fetch("https://api.yummly.com/v1/api/recipes?_app_id=e2bd00e5&_app_key=d968774422e49446a02fb726482892a4&q="+this.state.userInput+"&maxResult=50")
-      //   .then(response => response.json())
-      //   .then(data =>{
-      //     this.setState({ 
-      //           showDrinkMenu:0,
-      //           showFoodMenu:0,
-      //           showStores:0,
-      //           Data: data.matches,
-      //           key:1
-      //      })
-      //         if(this.state.questionNumber==0 && this.state.Error==0){
-      //           responsiveVoice.speak(this.state.questions[0].text)
-      //           this.userInput.focus();
-      //         }
-      //     })
-      //     .catch((err)=>{
-      //       this.setState({
-      //         Error:1
-      //       })
-      //       console.log(err,"Error")
-      //   })
-      // }
-
-
-
-      // else if ((this.state.userInput.length > 0 || this.props.finalTranscript.length > 0)&&(this.state.questions[this.state.questionNumber].key!=="Quantity")&&(this.state.questions[this.state.questionNumber].key!="RoomNumber")) {
-      //   console.log(this.state.questions[this.state.questionNumber].key)
-      //   fetch("https://cors-anywhere.herokuapp.com/https://b1nlp.herokuapp.com/B1NLP/api/v1.0/command/"+this.state.userInput)
-      //   .then(response => response.json())
-      //   .then(data =>{
-      //     console.log(data)
-      //     console.log(typeof(data.Result.response))
-      //     if(typeof(data.Result.response)=="string"){
-      //       console.log('if')
-      //       let Response="";
-      //       let Destination="";
-      //       let Type="";
-      //       let quantity="";
-      //       if(data.Result.intent=="Bring supplies"){
-      //         if(data.Result.quantity!=undefined){
-      //           quantity=data.Result.quantity+" ";
-      //         }
-      //         if(data.Result.type!=undefined){
-      //           Response = "Ok, I will bring you "+quantity+data.Result.type+" "+data.Result.supplies[0];
-      //           if(data.Result.destination!=undefined){
-      //             Destination=" from the "+data.Result.destination+" in a few minutes."
-      //           };
-      //         }
-      //         else{
-      //           Response = "Ok, I will bring you "+quantity+data.Result.supplies[0];
-      //           if(data.Result.destination!=undefined){
-      //             Destination=" from the "+data.Result.destination+" in a few minutes."
-      //           }
-      //         }
-      //       }
-      //       else if(data.Result.intent=="Guide"){
-      //         Response=data.Result.response+" to "+data.Result.destination+".";
-      //       }
-      //       else if(data.Result.intent=="Move to place"){
-      //         Response= "Sure, I will go to "+data.Result.destination+" and wait for you.";
-      //       }
-      //       else{
-      //         Response=data.Result.response
-      //       }
-      //       let QuestionsArray = this.state.questions;
-      //       QuestionsArray.splice(this.state.questionNumber+1,0,{
-      //         text: Response+Destination, 
-      //         sender: 'BOT',
-      //         key: 'OrderItems',
-      //         buttons: [{
-      //           text: 'Main Menu',
-      //           value: 'continue',
-      //         }]
-      //       })
-      //       console.log(data.Result.response,data.Result.intent)
-      //       this.setState({
-      //         loadingBot: false,
-      //         messages: [
-      //           ...this.state.messages,
-      //           {
-      //             text: this.state.userInput,
-      //             type: 'USER'
-      //           }
-      //         ],
-      //         answers: this.state.questions[this.state.questionNumber].key ? {
-      //           ...this.state.answers,
-      //           [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
-      //         } : {
-      //           ...this.state.answers,
-      //         },
-      //         questions:QuestionsArray,
-      //         showCategory:0,
-      //         showNursingImages:0,
-      //         showSuppliesImages:0,
-      //         userInput: '',
-      //         loadingBot: true,
-      //       },()=>{
-      //         this.setState({
-      //           userInput:""
-      //         },()=>{this.props.resetTranscript()
-      //         this.nextQuestion()
-      //         })
-      //       })
-      //     }
-      //     else{
-      //       console.log('else');
-      //       let QuestionsArray = this.state.questions;
-      //       let response = <div>Discharge Instructions :<br/>
-      //       {data.Result.response[0].instructions.map((res,i)=>{
-      //          return <p key={i} style={{fontSize:13}}>&nbsp;&nbsp;&nbsp;&nbsp;{res}</p>  
-      //       })}</div>
-      //       QuestionsArray.splice(this.state.questionNumber+1,0,{
-      //         text: response, 
-      //         sender: 'BOT',
-      //         key: 'OrderItems',
-      //         buttons: [{
-      //           text: 'Main Menu',
-      //           value: 'continue',
-      //         }]
-      //       })
-      //       this.setState({
-      //         loadingBot: false,
-      //         messages: [
-      //           ...this.state.messages,
-      //           {
-      //             text: this.state.userInput,
-      //             type: 'USER'
-      //           }
-      //         ],
-      //         answers: this.state.questions[this.state.questionNumber].key ? {
-      //           ...this.state.answers,
-      //           [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
-      //         } : {
-      //           ...this.state.answers,
-      //         },
-      //         questions:QuestionsArray,
-      //         showCategory:0,
-      //         showNursingImages:0,
-      //         showSuppliesImages:0,
-      //         userInput: '',
-      //         loadingBot: true,
-      //       },()=>{
-      //         this.setState({
-      //           userInput:""
-      //         },()=>{this.props.resetTranscript()
-      //         this.nextQuestion()
-      //         })
-      //       })
-      //     }
-        
-      //     })
-      //     .catch((err)=>{
-      //       this.setState({
-      //         Error:1
-      //       })
-      //     })
-      // }
-      else{
-        this.setState({
-          loadingBot: false,
-          messages: [
-            ...this.state.messages,
-            {
-              text: this.state.userInput,
-              type: 'USER'
-            }
-          ],
-          answers: this.state.questions[this.state.questionNumber].key ? {
-            ...this.state.answers,
-            [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
-          } : {
-            ...this.state.answers,
-          },
-          userInput: '',
-          loadingBot: true,
-        },()=>{
-          this.setState({
-            userInput:""
-          },()=>{this.props.resetTranscript()
-          this.nextQuestion()
-          })
-        })
-      }
+        }
+    }
+    
   }
   componentDidUpdate(){
     if(document.getElementById("frame")){

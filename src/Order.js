@@ -745,7 +745,7 @@ class Order extends Component {
                             handleSelect={(index)=>{this.onButtonSelect(index+1)}}
                             direction="horizontal"
                             width="100%"
-                            height={160}
+                            height={200}
                             itemRatio="8:5"
                             background="rgba(0, 0, 0, 0)"
                         />
