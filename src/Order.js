@@ -21,12 +21,15 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button1 from '@material-ui/core/Button';
-
+import swal from 'sweetalert2';
 import classNames from "classnames";
 import ScrollArea from "react-scrollbar";
 import { Link } from 'react-router-dom';
 import Bot from './Bot';
 import './App.css';
+
+
+let responsiveVoice = window.responsiveVoice;
 
 const imagesArr = [
     'img/slider1.png',
@@ -385,7 +388,21 @@ class Order extends Component {
         this.setState({
             OrderedFood:this.state.item.name
         })
-
+        if(this.state.counter==0){
+            swal("Please select the Quantity","","info")
+        }
+        else{
+            swal({
+                title: 'Your Order of '+this.state.counter+' '+this.state.item.name+'"s has beed initiated.',
+                imageUrl: this.state.item.imgURL,
+                imageWidth: "100%",
+                imageHeight: "auto",
+                imageAlt: 'Custom image',
+                animation: false
+              })
+              responsiveVoice.speak('Your Order of '+this.state.counter+' '+this.state.item.name+'"s has beed initiated.')
+        }
+       
     }
     handleChange = panel => (event, expanded) => {
         this.setState({
@@ -673,16 +690,13 @@ class Order extends Component {
                                         <Col  style={{margin:"0 !important"}} lg={4} md={4} sm={12} xs={12}> 
                                        
                                             <Row style={{float:"right",marginRight:"30%"}}>
-                                        <img src={"/img/minus.png"}  style={{height:20}} onClick = {(e)=>this.decrement(e)}/> 
+                                        <img src={"/img/minus.png"}  style={{height:25}} onClick = {(e)=>this.decrement(e)}/> 
                                            
                                            <div id='counter' style={{color:"white",padding:"0px 5px 0px 5px"}}>{this.state.counter}</div> 
                                                
-                                           <img src={"/img/plus.png"} style={{height:20}} onClick = {(e)=>this.increment(e)}/>
+                                           <img src={"/img/plus.png"} style={{height:25}} onClick = {(e)=>this.increment(e)}/>
                                            </Row>
-                                        
-                                     
                                         </Col>
-                                          
                                     {/* <Button1 style={{color:"#46c5e8"}} size="small" >
                                     Share
                                     </Button1> */}
