@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
-
+import { withRouter } from "react-router";
 import Container from '../primitives/Container';
 import UserInput from '../primitives/UserInput';
 import Message from '../components/Message';
@@ -453,14 +453,57 @@ class Conversation1 extends Component {
   }
 
   submitUserInput(e) {
-    e.preventDefault();
+    if(this.props.listening){
+      this.props.stopListening();
+    }
+    
     if(this.state.userInput.length>0){
-      console.log("onSubmit");
+      fetch("https://cors-anywhere.herokuapp.com/https://b1nlp33.herokuapp.com/B1NLP/api/v1.0/command/"+this.props.finalTranscript)
+      .then(response => response.json())
+      .then(data =>{
+        console.log(data)
+        if(data.Result.intent=="OrderFood"){
+          if(typeof(data.Result.B1_response)=="string"){
+              if(data.Result["RESTAURANT.NAME"]=="shake shack"){
+                  console.log("Shake Shack")
+                  this.props.history.push({
+                      pathname: '/order',
+                      state: { val:1,Food:(data.Result["FOOD.CATEGORY"]!=undefined?data.Result["FOOD.CATEGORY"]:"")  }
+                    })
+              }
+              else if(data.Result["RESTAURANT.NAME"]=="plum market"){
+                  console.log("plum market")
+                  this.props.history.push({
+                      pathname: '/order',
+                      state: { val:3,Food:(data.Result["FOOD.CATEGORY"]!=undefined?data.Result["FOOD.CATEGORY"]:"")  }
+                    })
+              }
+              else if(data.Result["RESTAURANT.NAME"]=="roasting plant" || data.Result["RESTAURANT.NAME"]=="roasting plant coffee"){
+                  console.log("roasting")
+                  this.props.history.push({
+                      pathname: '/order',
+                      state: { val:2,Food:(data.Result["FOOD.CATEGORY"]!=undefined?data.Result["FOOD.CATEGORY"]:"")  }
+                    })
+              }
+              else if(data.Result["intent"]=="OrderFood"&& data.Result["FOOD.CATEGORY"]!=undefined){
+                  this.props.history.push({
+                      pathname: '/order',
+                      state: { val:4,Food:data.Result["FOOD.CATEGORY"] }
+                  })
+              }
+              else if(data.Result["intent"]=="OrderFood"){
+                  this.props.history.push({
+                      pathname: '/order',
+                      state: { val:1  }
+                  })
+              }
+            }
+        }
+        else{
+          console.log("onSubmit");
       console.log(this.state.userInput,"input");
       this.props.Unlock(this.state.userInput,this.state.questions[this.state.questionNumber].key);
-        if(this.props.listening){
-          this.props.stopListening();
-        }
+       
         // if(this.state.userInput=="supplies"){
         //   this.setState({
         //     SuppliesClicked:1,
@@ -1040,6 +1083,7 @@ class Conversation1 extends Component {
         //       })
         //     })
         // }
+        
         else if(this.state.questions[this.state.questionNumber].key=="PASSCODE"&&this.state.userInput!=="99999"){
     
             this.setState({
@@ -1102,6 +1146,10 @@ class Conversation1 extends Component {
             })
           })
         }
+        }
+
+      })
+      
     }
   
   }
@@ -1110,12 +1158,19 @@ class Conversation1 extends Component {
       var objDiv = document.getElementById("frame");
       objDiv.scrollTop = objDiv.scrollHeight;
     }
-    if(this.props.finalTranscript!==""){
+  if(this.props.finalTranscript!==""){
       console.log("in update")
-      this.setState({
-        userInput: this.props.finalTranscript
-      },()=>{this.props.resetTranscript()
-      this.props.stopListening()})
+      if(this.state.userInput!=""){
+        this.props.resetTranscript();
+        this.submitUserInput();
+        this.props.stopListening()
+      }
+      else{
+        this.setState({
+          userInput: this.props.finalTranscript
+        })
+           this.props.stopListening()
+      }
       document.getElementById("userInput").value=this.state.userInput
     }
   }
@@ -1221,7 +1276,7 @@ class Conversation1 extends Component {
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
             <div className="row">
             <div className="col-2 text-center p-0" style={{marginRight: "-20px"}}>
-            <form className="inputForm" onSubmit={(e) => this.submitUserInput(e)}></form>
+            <form className="inputForm"></form>
             <img className="audio-button" onClick={() => this.listen()} src={(this.props.listening) ? ("img/mic_on.png") : ("img/mic_off.png")}/>
             </div>
             <div className="col-8 text-center p-0" >
@@ -1237,7 +1292,7 @@ class Conversation1 extends Component {
               />     
             </div>
             <div className="col-2 text-center p-0" style={{ marginLeft: "-10px"}}>
-            <SubmitButton onClick={(e) => this.submitUserInput(e)} id="submitButton" className="submitButton"><img src="img/send.png"/></SubmitButton>            </div>
+            <SubmitButton onClick={this.submitUserInput} id="submitButton" className="submitButton"><img src="img/send.png"/></SubmitButton>            </div>
             </div>
                        
             </div>
@@ -1255,4 +1310,4 @@ const options = {
   autoStart: false
 }
 
-export default SpeechRecognition(options)(Conversation1);
+export default SpeechRecognition(options)(withRouter(Conversation1));
