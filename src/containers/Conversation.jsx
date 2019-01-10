@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import SpeechRecognition from 'react-speech-recognition';
 import swal from 'sweetalert2';
 import autoBind from 'react-autobind';
+import { withRouter } from "react-router";
 import {Card } from 'reactstrap';
 
 let responsiveVoice = window.responsiveVoice;
@@ -788,6 +789,10 @@ class Conversation extends Component {
                 })
               })
             }
+            else if(data.Result.intent == "Open" || data.Result.intent == "Close" || data.Result.intent == "Lock" || data.Result.intent == "Unlock"){
+              console.log("DELIVERY")
+              this.props.history.push("/Delivery")
+            }
             else if(data.Result.intent && data.Result["FOOD.CATEGORY"] == undefined){
               console.log(data.Result.intent)
               let QuestionsArray = this.state.questions;
@@ -1217,6 +1222,7 @@ class Conversation extends Component {
         //       })
         //     })
         // }
+
         else{
           this.setState({
             loadingBot: false,
@@ -1402,4 +1408,4 @@ const options = {
   autoStart: false
 }
 
-export default SpeechRecognition(options)(Conversation);
+export default SpeechRecognition(options)(withRouter(Conversation));
