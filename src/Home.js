@@ -2,12 +2,9 @@ import React, { Component,Fragment } from 'react';
 import { Container, Row, Col, Card } from 'reactstrap';
 import Header from './Header';
 import {Link} from 'react-router-dom';
-import Typist from 'react-typist';
 import SpeechRecognition from 'react-speech-recognition';
 import { withRouter } from "react-router";
 import PropTypes from "prop-types";
-import ReactTypester from 'react-typester';
-import Typed from 'typed.js';
 
 let responsiveVoice = window.responsiveVoice;
 
