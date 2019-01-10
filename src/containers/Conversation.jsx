@@ -510,9 +510,9 @@ class Conversation extends Component {
     return Yes
   }
 
-  submitUserInput(e) {
+  submitUserInput() {
+    console.log(this.state.userInput)
     if(this.state.userInput.length>0){
-      e.preventDefault();
       console.log("onSubmit");
       console.log(this.state.userInput,"input");
      
@@ -1253,10 +1253,16 @@ class Conversation extends Component {
     }
     if(this.props.finalTranscript!==""){
       console.log("in update")
-      this.setState({
-        userInput: this.props.finalTranscript
-      },()=>{this.props.resetTranscript()
-      this.props.stopListening()})
+      if(this.state.userInput!=""){
+        this.props.resetTranscript();
+        this.submitUserInput();
+        this.props.stopListening()
+      }
+      else{
+        this.setState({
+          userInput: this.props.finalTranscript
+        })
+      }
       document.getElementById("userInput").value=this.state.userInput
     }
   }
@@ -1362,7 +1368,7 @@ class Conversation extends Component {
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12">
             <div className="row">
             <div className="col-2 text-center p-0" style={{marginRight: "-20px"}}>
-            <form className="inputForm" onSubmit={(e) => this.submitUserInput(e)}></form>
+            <form className="inputForm" ></form>
             <img className="audio-button" onClick={() => this.listen()} src={(this.props.listening) ? ("img/mic_on.png") : ("img/mic_off.png")}/>
             </div>
             <div className="col-8 text-center p-0" >
@@ -1378,7 +1384,7 @@ class Conversation extends Component {
               />     
             </div>
             <div className="col-2 text-center p-0" style={{ marginLeft: "-10px"}}>
-            <SubmitButton onClick={(e) => this.submitUserInput(e)} id="submitButton" className="submitButton"><img src="img/send.png"/></SubmitButton>            </div>
+            <SubmitButton onClick={ this.submitUserInput } id="submitButton" className="submitButton"><img src="img/send.png"/></SubmitButton>            </div>
             </div>
                        
             </div>
