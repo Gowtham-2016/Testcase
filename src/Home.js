@@ -184,7 +184,7 @@ class Home extends Component {
                 <Row style={{overflowX: "hidden", overflowY: "auto",background:"#111315"}}>
                     <Col lg={12} md={12} sm={12} xs={12}>
                         <Row>
-                            <div style={{height:"auto",position: "absolute", top: '10%',left: '52%', transform: 'translate(-50%, -50%)'}}>
+                            <div style={{height:"auto",width:"80%",position: "absolute", top: '10%',left: '52%', transform: 'translate(-50%, -50%)'}}>
                             <Typer
                                 dataText={[this.state.response]} 
                             />
