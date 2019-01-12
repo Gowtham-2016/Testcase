@@ -167,7 +167,7 @@ class Home extends Component {
            // this.forceUpdate();
           }
           else{
-            this.props.history.push("/delivery")
+            this.props.history.push("/DeliveryPickUp")
           }
           this.props.resetTranscript();
           this.props.stopListening();
@@ -176,7 +176,7 @@ class Home extends Component {
     }
     onDelivery(e){
         e.preventDefault();
-        this.props.history.push("/delivery")
+        this.props.history.push("/DeliveryPickUp")
     }
     render() {
         return (
