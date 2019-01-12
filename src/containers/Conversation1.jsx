@@ -457,7 +457,7 @@ class Conversation1 extends Component {
       this.props.stopListening();
     }
     
-    if(this.state.userInput.length>0){
+    if(this.state.userInput.length>0 && this.state.questions[this.state.questionNumber].key!="PASSCODE"){
       fetch("https://cors-anywhere.herokuapp.com/https://b1nlp33.herokuapp.com/B1NLP/api/v1.0/command/"+this.props.finalTranscript)
       .then(response => response.json())
       .then(data =>{

@@ -117,7 +117,7 @@ class Home extends Component {
           fetch("https://cors-anywhere.herokuapp.com/https://b1nlp33.herokuapp.com/B1NLP/api/v1.0/command/"+this.props.finalTranscript)
         .then(response => response.json())
         .then(data =>{
-          console.log(data)
+          console.log(data);
           if(data.Result.intent=="OrderFood"){
             if(typeof(data.Result.B1_response)=="string"){
                 if(data.Result["RESTAURANT.NAME"]=="shake shack"){
@@ -213,7 +213,6 @@ class Home extends Component {
                     </Col>
                 </Row>
             </Fragment>
-
         );
     }
 }

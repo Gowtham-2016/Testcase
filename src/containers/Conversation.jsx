@@ -789,9 +789,49 @@ class Conversation extends Component {
                 })
               })
             }
+            else if(this.state.userInput=="I would like to check my delivery status"){
+              this.props.history.push("/DeliveryPickUp")
+            //   console.log(data.Result.intent)
+            //   let QuestionsArray = this.state.questions;
+            //   QuestionsArray.splice(this.state.questionNumber+1,0,{
+            //     text: "OK, i'm tracking your package. Estimated time of arrival is 10 AM to your door. The passscode to unlock bin 2 is 99999",
+            //     sender: 'BOT',
+            //     key: 'OrderItems',
+            //     buttons: [{
+            //       text: 'Back',
+            //       value: 'Back',
+            //       key:"Back"
+            //     }]
+            //   })
+            // this.setState({
+            //   loadingBot: false,
+            //   messages: [
+            //     ...this.state.messages,
+            //     {
+            //       text: this.state.userInput,
+            //       type: 'USER'
+            //     }
+            //   ],
+            //   answers: this.state.questions[this.state.questionNumber].key ? {
+            //     ...this.state.answers,
+            //     [this.state.questions[this.state.questionNumber].key]: this.state.userInput,
+            //   } : {
+            //     ...this.state.answers,
+            //   },
+            //   questions:QuestionsArray,
+            //   userInput: '',
+            //   loadingBot: true,
+            // },()=>{
+            //   this.setState({
+            //     userInput:""
+            //   },()=>{this.props.resetTranscript()
+            //   this.nextQuestion()
+            //   })
+            // })
+            }
             else if(data.Result.intent == "Open" || data.Result.intent == "Close" || data.Result.intent == "Lock" || data.Result.intent == "Unlock"){
               console.log("DELIVERY")
-              this.props.history.push("/Delivery")
+              this.props.history.push("/Delivery");
             }
             else if(data.Result.intent && data.Result["FOOD.CATEGORY"] == undefined){
               console.log(data.Result.intent)

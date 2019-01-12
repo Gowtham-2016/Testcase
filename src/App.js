@@ -8,17 +8,19 @@ import Home from './Home';
 import Order from './Order';
 import Header from './Header';
 import Delivery from './Delivery';
+import DeliveryPickUp from './DeliveryPickUp';
 import SplashScreen from './SplashScreen';
 
 class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div style={{height:"100%"}}>
           <Route exact path="/" component={SplashScreen}/>
           <Route exact path="/Home" component={Home}/>
           <Route exact path="/order" component={Order}/>
           <Route exact path="/Delivery" component={Delivery}/>
+          <Route exact path="/DeliveryPickUp" component={DeliveryPickUp}/>
           <Route exact path="/header" component={Header} />
           </div>
       </Router>
