@@ -393,14 +393,14 @@ class Order extends Component {
         }
         else{
             swal({
-                title: 'Your Order of '+this.state.counter+' '+this.state.item.name+'"s has beed initiated.',
+                title: 'Your Order of '+this.state.counter+' '+this.state.item.name+'"s has been initiated.',
                 imageUrl: this.state.item.imgURL,
                 imageWidth: "100%",
                 imageHeight: "auto",
                 imageAlt: 'Custom image',
                 animation: false
               })
-              responsiveVoice.speak('Your Order of '+this.state.counter+' '+this.state.item.name+'"s has beed initiated.')
+              responsiveVoice.speak('Your Order of '+this.state.counter+' '+this.state.item.name+'"s has been initiated.')
         }
        
     }
