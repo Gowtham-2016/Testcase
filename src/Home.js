@@ -96,24 +96,13 @@ class Home extends Component {
         responsiveVoice.speak(this.state.response)
         console.log("did mount")
       }
-    //   static getDerivedStateFromProps(props, state){
-    //       if(this.state.response!==state.response){
-    //           return {
-    //               ...state,
-    //               response:state.response
-    //           }
-    //       }
-    //       else{
-    //           return null
-    //       }
-    //   }
-      componentDidUpdate(){
+      componentDidUpdate(prevProps, prevState){
           console.log('update')
         // if(this.props.finalTranscript==""){
         //     this.props.stopListening();
         // }
-        if(this.props.finalTranscript!==""){
-          console.log("in update")
+        if(this.props.finalTranscript!=="" && this.props.finalTranscript!=prevProps.finalTranscript){
+          console.log("in update");
           fetch("https://cors-anywhere.herokuapp.com/https://b1nlp33.herokuapp.com/B1NLP/api/v1.0/command/"+this.props.finalTranscript)
         .then(response => response.json())
         .then(data =>{
@@ -160,9 +149,11 @@ class Home extends Component {
             this.props.history.push("/Delivery")
           }
           else if(data.Result.intent !== "Delivery" ){
-            this.setState({
-                response:data.Result.B1_response
-            })
+              if(this.state.response!=data.Result.B1_response){
+                this.setState({
+                    response:data.Result.B1_response
+                })
+              }
             responsiveVoice.speak(data.Result.B1_response)
            // this.forceUpdate();
           }

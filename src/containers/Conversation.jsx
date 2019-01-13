@@ -1125,12 +1125,12 @@ class Conversation extends Component {
     }
     
   }
-  componentDidUpdate(){
+  componentDidUpdate(prevProps, prevState){
     if(document.getElementById("frame")){
       var objDiv = document.getElementById("frame");
       objDiv.scrollTop = objDiv.scrollHeight;
     }
-    if(this.props.finalTranscript!==""){
+    if(this.props.finalTranscript!==""  ){
       console.log("in update")
       if(this.state.userInput!=""){
         this.props.resetTranscript();

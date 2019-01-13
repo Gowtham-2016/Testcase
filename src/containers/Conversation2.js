@@ -144,14 +144,15 @@ class Conversation2 extends Component {
     });
   }
   
-  listen(){
+  listen(e){
+    e.preventDefault();
     document.getElementById("userInput").focus();
     console.log("listen")
     //e.preventDefault();
     if(this.props.listening){
       this.props.stopListening()
     }
-    else if(!this.props.listening){
+    else {
       this.props.startListening()
     }
   }
@@ -583,7 +584,7 @@ class Conversation2 extends Component {
             },()=>{
               this.setState({
                 userInput:""
-              },()=>{this.props.resetTranscript()
+              },()=>{
               this.nextQuestion()
               })
             })
@@ -611,7 +612,8 @@ class Conversation2 extends Component {
           },()=>{
             this.setState({
               userInput:""
-            },()=>{this.props.resetTranscript()
+            },()=>{
+             
             this.nextQuestion()
             })
           })
@@ -621,6 +623,8 @@ class Conversation2 extends Component {
   
   }
   componentDidUpdate(){
+    console.log(this.props.listening);
+   
     if(document.getElementById("frame")){
       var objDiv = document.getElementById("frame");
       objDiv.scrollTop = objDiv.scrollHeight;
@@ -630,13 +634,11 @@ class Conversation2 extends Component {
       if(this.state.userInput!=""){
         this.props.resetTranscript();
         this.submitUserInput();
-        this.props.stopListening()
       }
       else{
         this.setState({
           userInput: this.props.finalTranscript
         })
-           this.props.stopListening()
       }
       document.getElementById("userInput").value=this.state.userInput
     }
@@ -744,7 +746,7 @@ class Conversation2 extends Component {
             <div className="row">
             <div className="col-2 text-center p-0" style={{marginRight: "-20px"}}>
             <form className="inputForm"></form>
-            <img className="audio-button" onClick={() => this.listen()} src={(this.props.listening) ? ("img/mic_on.png") : ("img/mic_off.png")}/>
+            <img className="audio-button" onClick={(e) => this.listen(e)} src={(this.props.listening) ? ("img/mic_on.png") : ("img/mic_off.png")}/>
             </div>
             <div className="col-8 text-center p-0" >
             <UserInput

@@ -1153,7 +1153,7 @@ class Conversation1 extends Component {
     }
   
   }
-  componentDidUpdate(){
+  componentDidUpdate(prevProps, prevState){
     if(document.getElementById("frame")){
       var objDiv = document.getElementById("frame");
       objDiv.scrollTop = objDiv.scrollHeight;
